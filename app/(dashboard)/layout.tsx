@@ -15,6 +15,9 @@ function layout({ children }: PropsWithChildren) {
       <div className="lg:col-span-4">
         <div className="py-16 px-4 sm:px-8 lg:px-16">{children}</div>
       </div>
+      <div className="grid col-span-5">
+        <h1>footer</h1>
+      </div>
     </main>
   );
 }
