@@ -3,7 +3,8 @@ import Link from "next/link";
 import Logo from "@/assets/logo.png";
 import { MobileNav } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
-import { UserButton } from "@clerk/nextjs";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+// import { UserButton } from "@clerk/nextjs";
 
 function SiteHeader() {
   return (
@@ -18,7 +19,11 @@ function SiteHeader() {
         <MobileNav />
         <div className="flex items-center gap-x-4 ">
           <ThemeToggle />
-          <UserButton afterSignOutUrl="/" />
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          {/* <UserButton afterSignOutUrl="/" /> */}
         </div>
       </div>
     </header>
