@@ -7,7 +7,7 @@ import Logo from "@/assets/logo.png";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-foreground to-slate-950">
       <header className="max-w-6xl mx-auto px-4 sm:px-8 py-6 flex gap-x-4 items-center">
         <Image src={Logo} alt="logo" className="w-10 h-10" />
         <h1 className="capitalize text-3xl md:text-3xl font-bold">Store</h1>
