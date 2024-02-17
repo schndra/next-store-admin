@@ -2,23 +2,10 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import CardWrapper from "./CardWrapper";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const registerFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(4),
-  name: z.string().min(2),
-});
+import { CustomFormField } from "../FormComponents";
 
 function RegisterForm() {
   const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -44,48 +31,22 @@ function RegisterForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="spac-y-6">
           <div className="space-y-4">
-            <FormField
+            <CustomFormField
               control={form.control}
               name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="son goku" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              placeholder="song goku"
             />
-            <FormField
+            <CustomFormField
               control={form.control}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
                       placeholder="son.goku@gmail.com"
                       type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
-            <FormField
+            <CustomFormField
               control={form.control}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="password" type="password" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              placeholder="password"
+              type="password"
             />
             {/* error messages */}
             <Button type="submit" className="w-full">
