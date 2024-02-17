@@ -6,9 +6,10 @@ import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomFormField } from "../FormComponents";
+import { RegisterFormSchemaType, registerFormSchema } from "@/utils/schemas";
 
 function RegisterForm() {
-  const form = useForm<z.infer<typeof registerFormSchema>>({
+  const form = useForm<RegisterFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       email: "",
@@ -39,8 +40,8 @@ function RegisterForm() {
             <CustomFormField
               control={form.control}
               name="email"
-                      placeholder="son.goku@gmail.com"
-                      type="email"
+              placeholder="son.goku@gmail.com"
+              type="email"
             />
             <CustomFormField
               control={form.control}

@@ -6,9 +6,10 @@ import { Button } from "../ui/button";
 import { Form } from "../ui/form";
 import CardWrapper from "./CardWrapper";
 import { CustomFormField } from "../FormComponents";
+import { LoginFormSchemaType, loginFormSchema } from "@/utils/schemas";
 
 function LoginForm() {
-  const form = useForm<z.infer<typeof loginFormSchema>>({
+  const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
       email: "",
@@ -35,7 +36,7 @@ function LoginForm() {
               control={form.control}
               name="email"
               placeholder="son.goku@gmail.com"
-                      type="email"
+              type="email"
             />
             <CustomFormField
               control={form.control}
