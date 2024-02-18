@@ -7,8 +7,12 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomFormField } from "../FormComponents";
 import { RegisterFormSchemaType, registerFormSchema } from "@/utils/schemas";
+import { useToast } from "../ui/use-toast";
+import { useTransition } from "react";
+import { registerAction } from "@/actions/register";
 
 function RegisterForm() {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<RegisterFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -18,8 +22,22 @@ function RegisterForm() {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof registerFormSchema>) => {
+  const { toast } = useToast();
+
+  const handleSubmit = (values: RegisterFormSchemaType) => {
     console.log(values);
+    startTransition(async () => {
+      const data = await registerAction(values);
+      if (data.error) {
+        toast({
+          description: data.error,
+          variant: "destructive",
+        });
+        return;
+      }
+      form.reset();
+      toast({ title: "Success!", description: data.success });
+    });
   };
 
   return (
@@ -27,7 +45,7 @@ function RegisterForm() {
       headerLabel="Create an account"
       backButtonLabel="Already have an account?"
       backButtonHref="/auth/login"
-      showSocial
+      showSocial={false}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="spac-y-6">
@@ -35,7 +53,7 @@ function RegisterForm() {
             <CustomFormField
               control={form.control}
               name="name"
-              placeholder="song goku"
+              placeholder="son goku"
             />
             <CustomFormField
               control={form.control}
@@ -50,7 +68,7 @@ function RegisterForm() {
               type="password"
             />
             {/* error messages */}
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isPending}>
               Create an account
             </Button>
           </div>
