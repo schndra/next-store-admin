@@ -2,6 +2,7 @@
 import bcryptjs from "bcryptjs";
 import { RegisterFormSchemaType, registerFormSchema } from "@/utils/schemas";
 import prisma from "@/utils/db";
+import { getUserByEmail } from "@/utils/helpers";
 
 export const registerAction = async (values: RegisterFormSchemaType) => {
   const validateFields = registerFormSchema.safeParse(values);
@@ -15,11 +16,7 @@ export const registerAction = async (values: RegisterFormSchemaType) => {
   const hashedPassword = await bcryptjs.hash(password, 10);
 
   //check if user exists
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
+  const existingUser = await getUserByEmail(email);
 
   if (existingUser) {
     return { error: "email already exists" };

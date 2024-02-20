@@ -13,6 +13,8 @@ import { registerAction } from "@/actions/register";
 
 function RegisterForm() {
   const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+
   const form = useForm<RegisterFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -21,8 +23,6 @@ function RegisterForm() {
       name: "",
     },
   });
-
-  const { toast } = useToast();
 
   const handleSubmit = (values: RegisterFormSchemaType) => {
     console.log(values);
@@ -54,18 +54,21 @@ function RegisterForm() {
               control={form.control}
               name="name"
               placeholder="son goku"
+              disabled={isPending}
             />
             <CustomFormField
               control={form.control}
               name="email"
               placeholder="son.goku@gmail.com"
               type="email"
+              disabled={isPending}
             />
             <CustomFormField
               control={form.control}
               name="password"
               placeholder="password"
               type="password"
+              disabled={isPending}
             />
             {/* error messages */}
             <Button type="submit" className="w-full" disabled={isPending}>

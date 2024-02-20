@@ -7,8 +7,14 @@ import { Form } from "../ui/form";
 import CardWrapper from "./CardWrapper";
 import { CustomFormField } from "../FormComponents";
 import { LoginFormSchemaType, loginFormSchema } from "@/utils/schemas";
+import { startTransition, useTransition } from "react";
+import { loginAction } from "@/actions/login";
+import { useToast } from "../ui/use-toast";
 
 function LoginForm() {
+  const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+
   const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -19,7 +25,19 @@ function LoginForm() {
 
   const handleSubmit = (values: z.infer<typeof loginFormSchema>) => {
     console.log(values);
-    form.reset();
+
+    startTransition(async () => {
+      const data = await loginAction(values);
+      if (data?.error) {
+        toast({
+          description: data.error,
+          variant: "destructive",
+        });
+        return;
+      }
+      form.reset();
+      toast({ title: "Success!", description: "success fully logged in" });
+    });
   };
 
   return (
@@ -37,15 +55,17 @@ function LoginForm() {
               name="email"
               placeholder="son.goku@gmail.com"
               type="email"
+              disabled={isPending}
             />
             <CustomFormField
               control={form.control}
               name="password"
               placeholder="password"
               type="password"
+              disabled={isPending}
             />
             {/* add form errors here*/}
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isPending}>
               Login
             </Button>
           </div>
