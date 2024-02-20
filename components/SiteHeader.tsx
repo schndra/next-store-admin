@@ -3,10 +3,9 @@ import Link from "next/link";
 import Logo from "@/assets/logo.png";
 import { MobileNav } from "./MobileNav";
 import ThemeToggle from "./ThemeToggle";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-// import { UserButton } from "@clerk/nextjs";
+import UserBtn from "./auth/UserBtn";
 
-function SiteHeader() {
+async function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="py-4 sm:px-16 lg:px-24 px-4 flex items-center justify-between">
@@ -17,13 +16,9 @@ function SiteHeader() {
           </Link>
         </div>
         <MobileNav />
-        <div className="flex items-center gap-x-4 ">
+        <div className="flex items-center  gap-x-4 ">
           <ThemeToggle />
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          {/* <UserButton afterSignOutUrl="/" /> */}
+          <UserBtn />
         </div>
       </div>
     </header>
