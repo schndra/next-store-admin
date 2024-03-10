@@ -42,7 +42,8 @@ export const {
       }
 
       if (token) {
-        session.user.role = token.role!;
+        // console.log(typeof token.role);
+        session.user.role = token.role! as UserRole;
       }
 
       // console.log({ session });

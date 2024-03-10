@@ -7,6 +7,7 @@ import { loginFormSchema } from "./utils/schemas";
 import { getUserByEmail } from "./utils/helpers";
 
 import bcryptjs from "bcryptjs";
+import { UserRole } from "@prisma/client";
 
 export default {
   providers: [
@@ -27,7 +28,9 @@ export default {
 
           const user = await getUserByEmail(email);
 
-          if (!user || !user.password) return null;
+          // stops user from sign in
+          if (!user || !user.password || user.role !== UserRole.ADMIN)
+            return null;
 
           const passwordMatch = await bcryptjs.compare(password, user.password);
 
