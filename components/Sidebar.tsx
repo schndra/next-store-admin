@@ -1,11 +1,16 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import links from "@/utils/links";
+import Link from "next/link";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ className }: SidebarProps) {
+  const pathname = usePathname();
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -167,14 +172,20 @@ export function Sidebar({ className }: SidebarProps) {
           </h2>
           <ScrollArea className="h-[calc(100vh-8rem)] px-1">
             <div className="space-y-1 p-2">
-              {links?.map((playlist, i) => (
+              {links?.map((link, i) => (
                 <Button
-                  key={`${playlist}-${i}`}
-                  variant="ghost"
-                  className="w-full justify-start font-normal capitalize gap-x-2"
+                  asChild
+                  key={`${link}-${i}`}
+                  variant={pathname === link.href ? "default" : "ghost"}
+                  className="justify-start"
                 >
-                  {playlist.icon}
-                  {playlist.label}
+                  <Link
+                    href={link.href}
+                    className="w-full justify-start font-normal capitalize gap-x-2"
+                  >
+                    {link.icon}
+                    {link.label}
+                  </Link>
                 </Button>
               ))}
             </div>

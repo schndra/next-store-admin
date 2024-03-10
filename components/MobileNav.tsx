@@ -1,5 +1,5 @@
 "use client";
-
+import { usePathname } from "next/navigation";
 import * as React from "react";
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,7 @@ import Logo from "@/assets/logo.png";
 
 export function MobileNav() {
   const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -71,7 +72,15 @@ export function MobileNav() {
                   onOpenChange={setOpen}
                   className="text-muted-foreground"
                 >
-                  <span className="capitalize">{item.label}</span>
+                  <span
+                    className={
+                      pathname === item.href
+                        ? "capitalize font-bold"
+                        : "capitalize"
+                    }
+                  >
+                    {item.label}
+                  </span>
                 </MobileLink>
               );
             })}
