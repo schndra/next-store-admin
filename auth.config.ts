@@ -29,8 +29,7 @@ export default {
           const user = await getUserByEmail(email);
 
           // stops user from sign in
-          if (!user || !user.password || user.role !== UserRole.ADMIN)
-            return null;
+          if (!user || !user.password) return null;
 
           const passwordMatch = await bcryptjs.compare(password, user.password);
 

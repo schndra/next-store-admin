@@ -12,7 +12,18 @@ declare module "next-auth" {
       role: UserRole;
     };
   }
+
+  interface User {
+    role: UserRole;
+  }
 }
+
+declare module "@auth/core/adapters" {
+  interface AdapterUser {
+    role: UserRole;
+  }
+}
+
 declare module "@auth/core/jwt" {
   interface JWT {
     role?: UserRole;
@@ -26,6 +37,17 @@ export const {
   signOut,
 } = NextAuth({
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      const isAllowedToSignIn = user.role === UserRole.ADMIN;
+      if (isAllowedToSignIn) {
+        return isAllowedToSignIn;
+      } else {
+        // Return false to display a default error message
+        return false;
+        // Or you can return a URL to redirect to:
+        // return '/unauthorized'
+      }
+    },
     async jwt({ token, account }) {
       // Persist the OAuth access_token to the token right after signin
       // console.log({ token });
