@@ -87,7 +87,7 @@ export default {
       // console.log({ token });
       if (!token.email) return token;
       // const userInDb = await getUserByEmail(token.email!);
-      const userInDb = await getUserById(token.email);
+      const userInDb = await getUserByEmail(token.email);
 
       if (!userInDb) return token;
       token.role = userInDb.role;
