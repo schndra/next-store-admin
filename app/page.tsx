@@ -24,7 +24,7 @@ export default function Home() {
             control like never before.
           </p>
           <Button asChild className="mt-4">
-            <Link href="/stats">Get Started</Link>
+            <Link href="/admin/stats">Get Started</Link>
           </Button>
         </div>
         <Image src={LandingImg} alt="landing" className="hidden lg:block" />

@@ -4,7 +4,7 @@ export const { auth } = NextAuth(authConfig);
 
 import {
   LOGIN_REDIRECT,
-  adminRoutes,
+  adminAuthPrefix,
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
@@ -17,7 +17,8 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoutes = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoutes = authRoutes.includes(nextUrl.pathname);
-  const isAdminRoutes = adminRoutes.includes(nextUrl.pathname);
+  // const isAdminRoutes = adminRoutes.includes(nextUrl.pathname);
+  const isAdminRoutes = nextUrl.pathname.startsWith(adminAuthPrefix);
 
   if (isApiAuthRoute) {
     return;
@@ -32,6 +33,11 @@ export default auth((req) => {
 
   if (!isLoggedIn && !isPublicRoutes) {
     return Response.redirect(new URL("/auth/login", nextUrl));
+  }
+
+  //navigate from empty admin page
+  if (req.nextUrl.pathname === "/admin") {
+    return Response.redirect(new URL("/admin/stats", nextUrl));
   }
 
   if (isAdminRoutes) {
