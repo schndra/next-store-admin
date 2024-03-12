@@ -8,17 +8,17 @@ type NavLink = {
 
 const links: NavLink[] = [
   {
-    href: "/stats",
+    href: "/admin/stats",
     label: "stats",
     icon: <LayoutDashboard />,
   },
   {
-    href: "/test1",
-    label: "test1",
+    href: "/admin/product",
+    label: "product",
     icon: <LayoutDashboard />,
   },
   {
-    href: "/test2",
+    href: "/admin/test2",
     label: "test2",
     icon: <LayoutDashboard />,
   },
