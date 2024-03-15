@@ -14,3 +14,14 @@ export const registerFormSchema = z.object({
 });
 
 export type RegisterFormSchemaType = z.infer<typeof registerFormSchema>;
+
+export const createAndEditCategorySchema = z.object({
+  title: z.string(),
+  desc: z.string(),
+  img: z.string(),
+  slug: z.string(),
+});
+
+export type CreateAndEditCategoryType = z.infer<
+  typeof createAndEditCategorySchema
+>;

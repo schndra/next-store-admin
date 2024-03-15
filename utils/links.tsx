@@ -18,8 +18,8 @@ const links: NavLink[] = [
     icon: <LayoutDashboard />,
   },
   {
-    href: "/admin/test2",
-    label: "test2",
+    href: "/admin/categories",
+    label: "category",
     icon: <LayoutDashboard />,
   },
 ];
