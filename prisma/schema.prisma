@@ -63,31 +63,37 @@ model VerificationToken {
 }
 
 model Category {
-  id            String        @id @default(cuid())
-  title         String
-  desc          String
-  img           String?
-  slug          String        @unique
-  subCategories Subcategory[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id        String    @id @default(cuid())
+  title     String
+  desc      String
+  img       String?
+  slug      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
-model Subcategory {
+model Product {
   id         String   @id @default(cuid())
   title      String
-  slug       String
+  desc       String
+  img        String[]
+  slug       String   @unique
+  price      Decimal //29.00
+  isFeatured Boolean  @default(false)
+  categoryId String // fk category 
   category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
+  images     Image[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
 
-// model Product {
-//   id         String  @id @default(cuid())
-//   title      String
-//   desc       String
-//   img        String // can hav multiple images
-//   price      Decimal //29.99
-//   isFeatured Boolean @default(false)
-// }
+model Image {
+  id        String   @id @default(cuid())
+  url       String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String //fk product 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
