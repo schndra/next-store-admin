@@ -31,6 +31,23 @@ export async function createCategoryAction(
   }
 }
 
+// todo implement search & paginantion
+export async function getAllCategoryAction(): Promise<{
+  categories: CategoryType[];
+} | null> {
+  try {
+    const categories: CategoryType[] = await prisma.category.findMany({
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    return { categories };
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getSingleCategory(
   id: string
 ): Promise<CategoryType | null> {
