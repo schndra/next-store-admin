@@ -5,16 +5,22 @@ import Heading from "../../_components/heading";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-
+import { useQuery } from "@tanstack/react-query";
+import { getAllCategoryAction } from "../../_actions/category-action";
 
 function CategoryView() {
   const router = useRouter();
+
+  const { data } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () => getAllCategoryAction(),
+  });
 
   return (
     <div className="min-h-[calc(100vh-12rem)] md:min-h-[calc(100vh-9.4rem)] mt-4">
       <div className="flex items-center justify-between">
         <Heading
-          title={`Category (${0})`}
+          title={`Category (${data?.categories.length})`}
           description="Manage categories for your store"
         />
         <div className="flex items-center justify-between">

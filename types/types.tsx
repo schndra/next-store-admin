@@ -19,16 +19,7 @@ export type CategoryType = {
   desc: string;
   img?: string | null;
   slug: string;
-  subCategories?: SubcategoryType[];
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type SubcategoryType = {
-  id: String;
-  title: String;
-  slug: String;
-  categoryId: String;
+  products?: any[]; // change later
   createdAt: Date;
   updatedAt: Date;
 };

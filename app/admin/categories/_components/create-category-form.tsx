@@ -9,7 +9,14 @@ import { useRouter } from "next/navigation";
 import Heading from "../../_components/heading";
 import { Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -18,6 +25,8 @@ import {
 } from "@/types/types";
 import { CustomFormField } from "@/components/FormComponents";
 import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
+import ImageUpload from "@/components/ImageUpload";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {
   const queryClient = useQueryClient();
@@ -35,7 +44,6 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
     onSuccess: (data) => {
       if (!data) {
         console.log(data);
-        // console.log("there was an error in creating categories");
         toast({ description: "there was an error in creating category" });
         return;
       }
@@ -63,10 +71,12 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
   });
 
   function onSubmit(values: CreateAndEditCategoryType) {
-    console.log(values);
     mutate({
       ...values,
-      slug: values.title.toLowerCase().split(" ").join("-"),
+      slug: values.title
+        .toLowerCase()
+        .replace(/[^\w ]+/g, "")
+        .replace(/ +/g, "-"),
     });
   }
 
@@ -92,6 +102,25 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8 w-full"
           >
+            {/* image upload */}
+            <FormField
+              control={form.control}
+              name="img"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category Image</FormLabel>
+                  <FormControl>
+                    <ImageUpload
+                      value={field.value ? [field.value] : []}
+                      onChange={(url) => field.onChange(url)}
+                      onRemove={() => field.onChange("")}
+                      disabled={isPending}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <div className="md:grid md:grid-cols-3 gap-8 ">
               <CustomFormField
                 control={form.control}
