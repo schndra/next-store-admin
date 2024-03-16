@@ -1,6 +1,6 @@
 "use server";
 import bcryptjs from "bcryptjs";
-import { RegisterFormSchemaType, registerFormSchema } from "@/utils/schemas";
+import { RegisterFormSchemaType, registerFormSchema } from "@/types/types";
 import prisma from "@/utils/db";
 import { getUserByEmail } from "@/utils/helpers";
 

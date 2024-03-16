@@ -6,16 +6,14 @@ import { useRouter } from "next/navigation";
 import Heading from "../../_components/heading";
 import { Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import {
-  Form,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CreateAndEditCategoryType,
   createAndEditCategorySchema,
-} from "@/utils/schemas";
+} from "@/types/types";
 import { CustomFormField } from "@/components/FormComponents";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {

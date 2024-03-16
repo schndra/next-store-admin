@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import type { NextAuthConfig } from "next-auth";
-import { loginFormSchema } from "./utils/schemas";
+import { loginFormSchema } from "./types/types";
 import { getUserByEmail, getUserById } from "./utils/helpers";
 
 import bcryptjs from "bcryptjs";

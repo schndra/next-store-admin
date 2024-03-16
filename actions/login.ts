@@ -2,7 +2,7 @@
 
 import { signIn } from "@/auth";
 import { LOGIN_REDIRECT } from "@/utils/routes";
-import { LoginFormSchemaType, loginFormSchema } from "@/utils/schemas";
+import { LoginFormSchemaType, loginFormSchema } from "@/types/types";
 import { AuthError } from "next-auth";
 
 export const loginAction = async (values: LoginFormSchemaType) => {
