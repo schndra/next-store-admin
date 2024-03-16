@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createCategoryAction,
   getSingleCategory,
+  updateCategoryAction,
 } from "../../_actions/category-action";
 import { useRouter } from "next/navigation";
 import Heading from "../../_components/heading";
@@ -25,8 +26,8 @@ import {
 } from "@/types/types";
 import { CustomFormField } from "@/components/FormComponents";
 import { useToast } from "@/components/ui/use-toast";
-import { Input } from "@/components/ui/input";
 import ImageUpload from "@/components/ImageUpload";
+import DeleteCategoryBtn from "./delete-category-btn";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {
   const queryClient = useQueryClient();
@@ -38,19 +39,27 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
     queryFn: () => getSingleCategory(categoryId),
   });
 
+  const toastErroMsg = data ? "editing" : "creating";
+  const toastSuccessMsg = data ? "editing" : "creating";
+
   const { mutate, isPending } = useMutation({
     mutationFn: (values: CreateAndEditCategoryType) =>
-      createCategoryAction(values),
+      data
+        ? updateCategoryAction(categoryId, values)
+        : createCategoryAction(values),
     onSuccess: (data) => {
       if (!data) {
-        console.log(data);
-        toast({ description: "there was an error in creating category" });
+        toast({
+          description: `Error ${toastErroMsg} category. Let's try again.`,
+        });
         return;
       }
-      toast({ description: "category creation successfull" });
+      toast({
+        description: `Category ${toastSuccessMsg}! 🎉 Keep up the great work!`,
+      });
       //inavildate queries
       queryClient.invalidateQueries({ queryKey: ["categories"] });
-      // queryClient.invalidateQueries({ queryKey: ["category", categoryId] });
+      queryClient.invalidateQueries({ queryKey: ["category", categoryId] });
       router.push("/admin/categories");
     },
   });
@@ -63,10 +72,10 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
   const form = useForm<CreateAndEditCategoryType>({
     resolver: zodResolver(createAndEditCategorySchema),
     defaultValues: {
-      title: "",
-      desc: "",
-      img: "",
-      slug: "",
+      title: data?.title || "",
+      desc: data?.desc || "",
+      img: data?.img || "",
+      slug: data?.slug || "",
     },
   });
 
@@ -86,14 +95,7 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
         <div className="flex items-center justify-between">
           <Heading title={title} description={description} />
           {data && (
-            <Button
-              // disabled={loading}
-              variant="destructive"
-              size="sm"
-              onClick={() => {}}
-            >
-              <Trash className="h-4 w-4" />
-            </Button>
+            <DeleteCategoryBtn id={categoryId} />
           )}
         </div>
         <Separator />

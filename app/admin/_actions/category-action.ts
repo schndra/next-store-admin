@@ -31,6 +31,44 @@ export async function createCategoryAction(
   }
 }
 
+export async function updateCategoryAction(
+  id: string,
+  values: CreateAndEditCategoryType
+): Promise<CategoryType | null> {
+  // todo check user role
+
+  try {
+    const category: CategoryType = await prisma.category.update({
+      where: {
+        id,
+      },
+      data: {
+        ...values,
+      },
+    });
+    return category;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function deleteCategoryAction(
+  id: string
+): Promise<CategoryType | null> {
+  //todo check user role
+
+  try {
+    const category: CategoryType = await prisma.category.delete({
+      where: {
+        id,
+      },
+    });
+    return category;
+  } catch (error) {
+    return null;
+  }
+}
+
 // todo implement search & paginantion
 export async function getAllCategoryAction(): Promise<{
   categories: CategoryType[];
