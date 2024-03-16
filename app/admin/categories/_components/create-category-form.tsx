@@ -1,13 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getSingleCategory } from "../../_actions/category-action";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  createCategoryAction,
+  getSingleCategory,
+} from "../../_actions/category-action";
 import { useRouter } from "next/navigation";
 import Heading from "../../_components/heading";
 import { Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -15,20 +17,41 @@ import {
   createAndEditCategorySchema,
 } from "@/types/types";
 import { CustomFormField } from "@/components/FormComponents";
+import { useToast } from "@/components/ui/use-toast";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {
-  // const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const router = useRouter();
+  const { toast } = useToast();
 
   const { data } = useQuery({
     queryKey: ["category", categoryId],
     queryFn: () => getSingleCategory(categoryId),
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationFn: (values: CreateAndEditCategoryType) =>
+      createCategoryAction(values),
+    onSuccess: (data) => {
+      if (!data) {
+        console.log(data);
+        // console.log("there was an error in creating categories");
+        toast({ description: "there was an error in creating category" });
+        return;
+      }
+      toast({ description: "category creation successfull" });
+      //inavildate queries
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      // queryClient.invalidateQueries({ queryKey: ["category", categoryId] });
+      router.push("/admin/categories");
+    },
+  });
+
   const title = data ? "Edit category" : "Create category";
   const description = data ? "Edit a category." : "Add a new category";
   const action = data ? "Save changes" : "Create";
 
+  // Define form.
   const form = useForm<CreateAndEditCategoryType>({
     resolver: zodResolver(createAndEditCategorySchema),
     defaultValues: {
@@ -39,9 +62,13 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
     },
   });
 
-  console.log(data);
-
-  function onSubmit() {}
+  function onSubmit(values: CreateAndEditCategoryType) {
+    console.log(values);
+    mutate({
+      ...values,
+      slug: values.title.toLowerCase().split(" ").join("-"),
+    });
+  }
 
   return (
     <>
@@ -68,7 +95,7 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
             <div className="md:grid md:grid-cols-3 gap-8 ">
               <CustomFormField
                 control={form.control}
-                name="Title"
+                name="title"
                 placeholder="Category Title"
               />
               <CustomFormField
@@ -77,7 +104,7 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
                 placeholder="Category Description"
               />
             </div>
-            <Button className="ml-auto" type="submit">
+            <Button className="ml-auto" type="submit" disabled={isPending}>
               {action}
             </Button>
           </form>

@@ -17,9 +17,9 @@ export type CategoryType = {
   id: string;
   title: string;
   desc: string;
-  img?: string;
+  img?: string | null;
   slug: string;
-  subCategories: SubcategoryType[];
+  subCategories?: SubcategoryType[];
   createdAt: Date;
   updatedAt: Date;
 };

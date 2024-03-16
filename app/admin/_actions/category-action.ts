@@ -1,8 +1,40 @@
+"use server";
+
+import {
+  CategoryType,
+  CreateAndEditCategoryType,
+  createAndEditCategorySchema,
+} from "@/types/types";
 import prisma from "@/utils/db";
 import { redirect } from "next/navigation";
 
-export async function getSingleCategory(id: string): Promise<any | null> {
-  let category: any | null = null;
+export async function createCategoryAction(
+  values: CreateAndEditCategoryType
+): Promise<CategoryType | null> {
+  //todo check user role
+  //todo get user id and set in category creatorId
+
+  try {
+    createAndEditCategorySchema.parse(values);
+
+    const category: CategoryType = await prisma.category.create({
+      data: {
+        ...values,
+      },
+    });
+
+    console.log("im gere");
+    return category;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getSingleCategory(
+  id: string
+): Promise<CategoryType | null> {
+  let category: CategoryType | null = null;
 
   //todo check if user has the role admin
 
@@ -15,8 +47,8 @@ export async function getSingleCategory(id: string): Promise<any | null> {
   } catch (error) {
     category = null;
   }
-  if (!category) {
-    redirect("/admin/category");
-  }
+  // if (!category) {
+  //   redirect("/admin/categories/create");
+  // }
   return category;
 }
