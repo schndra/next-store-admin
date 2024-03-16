@@ -97,11 +97,13 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
                 control={form.control}
                 name="title"
                 placeholder="Category Title"
+                labelText="Title"
               />
               <CustomFormField
                 control={form.control}
                 name="desc"
                 placeholder="Category Description"
+                labelText="Description"
               />
             </div>
             <Button className="ml-auto" type="submit" disabled={isPending}>

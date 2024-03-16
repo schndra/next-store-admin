@@ -14,6 +14,7 @@ type CustomFormFieldProps = {
   placeholder?: string;
   type?: string;
   disabled?: boolean;
+  labelText?: string;
 };
 
 export function CustomFormField({
@@ -22,6 +23,7 @@ export function CustomFormField({
   placeholder,
   type,
   disabled,
+  labelText,
 }: CustomFormFieldProps) {
   return (
     <FormField
@@ -29,7 +31,7 @@ export function CustomFormField({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{name}</FormLabel>
+          <FormLabel>{labelText || name}</FormLabel>
           <FormControl>
             <Input
               {...field}
