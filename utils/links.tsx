@@ -1,6 +1,6 @@
 import { LayoutDashboard } from "lucide-react";
 
-type NavLink = {
+export type NavLink = {
   href: string;
   label: string;
   icon: React.ReactNode;
@@ -9,17 +9,17 @@ type NavLink = {
 const links: NavLink[] = [
   {
     href: "/admin/stats",
-    label: "stats",
+    label: "Stats",
     icon: <LayoutDashboard />,
   },
   {
     href: "/admin/product",
-    label: "product",
+    label: "Product",
     icon: <LayoutDashboard />,
   },
   {
     href: "/admin/categories",
-    label: "category",
+    label: "Category",
     icon: <LayoutDashboard />,
   },
 ];
