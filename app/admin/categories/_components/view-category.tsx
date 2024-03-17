@@ -28,7 +28,7 @@ function CategoryView() {
   );
 
   return (
-    <div className="min-h-[calc(100vh-12rem)] md:min-h-[calc(100vh-9.4rem)] mt-4">
+    <>
       <div className="flex items-center justify-between">
         <Heading
           title={`Category (${data?.categories.length})`}
@@ -47,7 +47,7 @@ function CategoryView() {
         data={formattedCategories}
         searchKey="title"
       />
-    </div>
+    </>
   );
 }
 export default CategoryView;

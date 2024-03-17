@@ -91,62 +91,60 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
 
   return (
     <>
-      <div className="min-h-[calc(100vh-12rem)] md:min-h-[calc(100vh-9.4rem)] mt-4">
-        <div className="flex items-center justify-between">
-          <Heading title={title} description={description} />
-          {data && (
-            <DeleteCategoryBtn
-              id={categoryId}
-              variant={"destructive"}
-              size={"sm"}
-            />
-          )}
-        </div>
-        <Separator />
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 w-full"
-          >
-            {/* image upload */}
-            <FormField
-              control={form.control}
-              name="img"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category Image</FormLabel>
-                  <FormControl>
-                    <ImageUpload
-                      value={field.value ? [field.value] : []}
-                      onChange={(url) => field.onChange(url)}
-                      onRemove={() => field.onChange("")}
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="md:grid md:grid-cols-3 gap-8 ">
-              <CustomFormField
-                control={form.control}
-                name="title"
-                placeholder="Category Title"
-                labelText="Title"
-              />
-              <CustomFormField
-                control={form.control}
-                name="desc"
-                placeholder="Category Description"
-                labelText="Description"
-              />
-            </div>
-            <Button className="ml-auto" type="submit" disabled={isPending}>
-              {action}
-            </Button>
-          </form>
-        </Form>
+      <div className="flex items-center justify-between">
+        <Heading title={title} description={description} />
+        {data && (
+          <DeleteCategoryBtn
+            id={categoryId}
+            variant={"destructive"}
+            size={"sm"}
+          />
+        )}
       </div>
+      <Separator />
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full"
+        >
+          {/* image upload */}
+          <FormField
+            control={form.control}
+            name="img"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category Image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                    disabled={isPending}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="md:grid md:grid-cols-3 gap-8 ">
+            <CustomFormField
+              control={form.control}
+              name="title"
+              placeholder="Category Title"
+              labelText="Title"
+            />
+            <CustomFormField
+              control={form.control}
+              name="desc"
+              placeholder="Category Description"
+              labelText="Description"
+            />
+          </div>
+          <Button className="ml-auto" type="submit" disabled={isPending}>
+            {action}
+          </Button>
+        </form>
+      </Form>
     </>
   );
 }
