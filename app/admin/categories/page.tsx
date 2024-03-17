@@ -3,8 +3,8 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import CategoryView from "./_components/view-category";
-import { getAllCategoryAction } from "../_actions/category-action";
+import { getAllCategoryAction } from "@/app/admin/_actions/category-action";
+import CategoryView from "@/app/admin/categories/_components/view-category";
 
 async function CategoriesPage() {
   const queryClient = new QueryClient();

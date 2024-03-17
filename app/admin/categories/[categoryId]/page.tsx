@@ -3,8 +3,8 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import CategoryForm from "../_components/create-category-form";
-import { getSingleCategory } from "../../_actions/category-action";
+import CategoryForm from "@/app/admin/categories/_components/create-category-form";
+import { getSingleCategory } from "@/app/admin/_actions/category-action";
 
 async function CategoryPage({ params }: { params: { categoryId: string } }) {
   const queryClient = new QueryClient();

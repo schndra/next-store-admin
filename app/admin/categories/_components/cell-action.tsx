@@ -8,12 +8,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CategoryColumn } from "./columns";
 import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import DeleteCategoryBtn from "./delete-category-btn";
+import { CategoryColumn } from "@/app/admin/categories/_components/columns";
+import DeleteCategoryBtn from "@/app/admin/categories/_components/delete-category-btn";
 
 type CellActionProps = {
   data: CategoryColumn;

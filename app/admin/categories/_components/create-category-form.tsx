@@ -5,10 +5,9 @@ import {
   createCategoryAction,
   getSingleCategory,
   updateCategoryAction,
-} from "../../_actions/category-action";
+} from "@/app/admin/_actions/category-action";
+import Heading from "@/app/admin/_components/heading";
 import { useRouter } from "next/navigation";
-import Heading from "../../_components/heading";
-import { Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import {
   Form,
@@ -27,7 +26,7 @@ import {
 import { CustomFormField } from "@/components/FormComponents";
 import { useToast } from "@/components/ui/use-toast";
 import ImageUpload from "@/components/ImageUpload";
-import DeleteCategoryBtn from "./delete-category-btn";
+import DeleteCategoryBtn from "@/app/admin/categories/_components/delete-category-btn";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {
   const queryClient = useQueryClient();

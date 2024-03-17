@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
-import { deleteCategoryAction } from "../../_actions/category-action";
+import { deleteCategoryAction } from "@/app/admin/_actions/category-action";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";

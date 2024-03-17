@@ -1,15 +1,15 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import Heading from "../../_components/heading";
+import Heading from "@/app/admin/_components/heading";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCategoryAction } from "../../_actions/category-action";
+import { getAllCategoryAction } from "@/app/admin/_actions/category-action";
 import { CategoryColumn, columns } from "./columns";
 import { format } from "date-fns";
-import { DataTable } from "../../_components/data-table";
+import { DataTable } from "@/app/admin/_components/data-table";
 
 function CategoryView() {
   const router = useRouter();
