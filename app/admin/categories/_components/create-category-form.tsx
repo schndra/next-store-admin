@@ -40,7 +40,7 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
   });
 
   const toastErroMsg = data ? "editing" : "creating";
-  const toastSuccessMsg = data ? "editing" : "creating";
+  const toastSuccessMsg = data ? "updated" : "created";
 
   const { mutate, isPending } = useMutation({
     mutationFn: (values: CreateAndEditCategoryType) =>
@@ -95,7 +95,11 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
         <div className="flex items-center justify-between">
           <Heading title={title} description={description} />
           {data && (
-            <DeleteCategoryBtn id={categoryId} />
+            <DeleteCategoryBtn
+              id={categoryId}
+              variant={"destructive"}
+              size={"sm"}
+            />
           )}
         </div>
         <Separator />

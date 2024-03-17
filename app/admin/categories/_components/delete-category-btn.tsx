@@ -4,8 +4,29 @@ import { deleteCategoryAction } from "../../_actions/category-action";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
-function DeleteCategoryBtn({ id }: { id: string }) {
+type DeleteCategoryBtnProps = {
+  id: string;
+  dropDownMenuItem?: Boolean;
+  variant?:
+    | "link"
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | null
+    | undefined;
+  size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+};
+
+function DeleteCategoryBtn({
+  id,
+  variant,
+  size,
+  dropDownMenuItem = false,
+}: DeleteCategoryBtnProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -26,15 +47,30 @@ function DeleteCategoryBtn({ id }: { id: string }) {
       toast({
         description: "Category Deleted! 🎉 Create another one!",
       });
-      router.push("/admin/categories/create");
+      if (!dropDownMenuItem) {
+        router.push("/admin/categories/create");
+      }
     },
   });
+
+  if (dropDownMenuItem) {
+    return (
+      <DropdownMenuItem
+        onClick={() => {
+          mutate(id);
+        }}
+      >
+        <Trash className="mr-2 h-4 w-4" />
+        Delete
+      </DropdownMenuItem>
+    );
+  }
 
   return (
     <Button
       disabled={isPending}
-      variant="destructive"
-      size="sm"
+      variant={variant}
+      size={size}
       onClick={() => {
         mutate(id);
       }}

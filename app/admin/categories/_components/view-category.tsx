@@ -7,6 +7,9 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getAllCategoryAction } from "../../_actions/category-action";
+import { CategoryColumn, columns } from "./columns";
+import { format } from "date-fns";
+import { DataTable } from "../../_components/data-table";
 
 function CategoryView() {
   const router = useRouter();
@@ -15,6 +18,14 @@ function CategoryView() {
     queryKey: ["categories"],
     queryFn: () => getAllCategoryAction(),
   });
+
+  const formattedCategories: CategoryColumn[] = data!.categories.map(
+    (item) => ({
+      ...item,
+      createdAt: format(item.createdAt, "MMMM do, yyyy"),
+      updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
+    })
+  );
 
   return (
     <div className="min-h-[calc(100vh-12rem)] md:min-h-[calc(100vh-9.4rem)] mt-4">
@@ -31,9 +42,11 @@ function CategoryView() {
       </div>
       <Separator />
 
-      <h1>Stats Pages</h1>
-      {/* <div>{session?.user.name}</div>
-    <div>{session?.user.role}</div> */}
+      <DataTable
+        columns={columns}
+        data={formattedCategories}
+        searchKey="title"
+      />
     </div>
   );
 }
