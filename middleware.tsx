@@ -37,7 +37,7 @@ export default auth((req) => {
 
   //navigate from empty admin page
   if (req.nextUrl.pathname === "/admin") {
-    return Response.redirect(new URL("/admin/stats", nextUrl));
+    return Response.redirect(new URL("/admin/overview", nextUrl));
   }
 
   if (isAdminRoutes) {

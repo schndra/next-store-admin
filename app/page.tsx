@@ -24,13 +24,13 @@ export default function Home() {
             control like never before.
           </p>
           <Button asChild className="mt-4">
-            <Link href="/admin/stats">Get Started</Link>
+            <Link href="/admin/overview">Get Started</Link>
           </Button>
         </div>
         <Image src={LandingImg} alt="landing" className="hidden lg:block" />
       </section>
       {/* <Button asChild>
-        <Link href="/stats">Go to Stats page</Link>
+        <Link href="/overview">Go to Stats page</Link>
       </Button> */}
     </main>
   );

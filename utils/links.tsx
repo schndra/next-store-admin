@@ -8,8 +8,8 @@ export type NavLink = {
 
 const links: NavLink[] = [
   {
-    href: "/admin/stats",
-    label: "Stats",
+    href: "/admin/overview",
+    label: "Overview",
     icon: <LayoutDashboard />,
   },
   {

@@ -6,4 +6,4 @@ export const apiAuthPrefix = "/api/auth";
 
 export const adminAuthPrefix = "/admin";
 
-export const LOGIN_REDIRECT = "/admin/stats";
+export const LOGIN_REDIRECT = "/admin/overview";
