@@ -53,6 +53,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Category      Category[]
+  Product       Product[]
 }
 
 model VerificationToken {
@@ -84,6 +85,8 @@ model Product {
   slug       String   @unique
   price      Decimal //29.00
   isFeatured Boolean  @default(false)
+  creatorId  String //fk user id 
+  user       User     @relation(fields: [creatorId], references: [id])
   categoryId String // fk category 
   category   Category @relation(fields: [categoryId], references: [id])
   images     Image[]
