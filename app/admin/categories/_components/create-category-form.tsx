@@ -22,11 +22,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CreateAndEditCategoryType,
   createAndEditCategorySchema,
-} from "@/types/types";
+} from "@/app/_types/types";
 import { CustomFormField } from "@/components/FormComponents";
 import ImageUpload from "@/components/ImageUpload";
-import DeleteCategoryBtn from "@/app/admin/categories/_components/delete-category-btn";
 import { toast } from "sonner";
+import DeleteCategoryBtn from "@/app/admin/categories/_components/delete-category-btn";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {
   const queryClient = useQueryClient();

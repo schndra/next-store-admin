@@ -5,7 +5,7 @@ import {
   CategoryType,
   CreateAndEditCategoryType,
   createAndEditCategorySchema,
-} from "@/types/types";
+} from "@/app/_types/types";
 import prisma from "@/utils/db";
 import { UserRole } from "@prisma/client";
 import { redirect } from "next/navigation";

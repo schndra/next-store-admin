@@ -13,6 +13,8 @@ export const registerFormSchema = z.object({
   name: z.string().min(2),
 });
 
+export type RegisterFormSchemaType = z.infer<typeof registerFormSchema>;
+
 export type CategoryType = {
   id: string;
   title: string;
@@ -24,8 +26,6 @@ export type CategoryType = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-export type RegisterFormSchemaType = z.infer<typeof registerFormSchema>;
 
 export const createAndEditCategorySchema = z.object({
   title: z.string(),

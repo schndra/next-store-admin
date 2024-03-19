@@ -6,7 +6,7 @@ import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomFormField } from "../FormComponents";
-import { RegisterFormSchemaType, registerFormSchema } from "@/types/types";
+import { RegisterFormSchemaType, registerFormSchema } from "@/app/_types/types";
 import { useTransition } from "react";
 import { registerAction } from "@/actions/register";
 import { toast } from "sonner";

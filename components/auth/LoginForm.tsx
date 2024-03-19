@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Form } from "../ui/form";
 import CardWrapper from "./CardWrapper";
 import { CustomFormField } from "../FormComponents";
-import { LoginFormSchemaType, loginFormSchema } from "@/types/types";
+import { LoginFormSchemaType, loginFormSchema } from "@/app/_types/types";
 import { startTransition, useTransition } from "react";
 import { loginAction } from "@/actions/login";
 import { toast } from "sonner";
