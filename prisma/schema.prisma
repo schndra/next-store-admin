@@ -43,15 +43,16 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   password      String?
-  role          UserRole  @default(USER)
+  role          UserRole   @default(USER)
   accounts      Account[]
   sessions      Session[]
+  Category      Category[]
 }
 
 model VerificationToken {
@@ -69,6 +70,8 @@ model Category {
   img       String?
   slug      String    @unique
   products  Product[]
+  creatorId String //fk user id 
+  user      User      @relation(fields: [creatorId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -96,4 +99,3 @@ model Image {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-

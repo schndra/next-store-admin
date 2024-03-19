@@ -1,24 +1,39 @@
 "use server";
 
+import { getCurrentUser } from "@/lib/current-user";
 import {
   CategoryType,
   CreateAndEditCategoryType,
   createAndEditCategorySchema,
 } from "@/types/types";
 import prisma from "@/utils/db";
+import { UserRole } from "@prisma/client";
 import { redirect } from "next/navigation";
+
+async function authenticateAndRedirect() {
+  const currUser = await getCurrentUser();
+
+  if (!currUser?.id && currUser?.role !== UserRole.ADMIN) redirect("/");
+  return currUser;
+}
 
 export async function createCategoryAction(
   values: CreateAndEditCategoryType
 ): Promise<CategoryType | null> {
   //todo check user role
   //todo get user id and set in category creatorId
+  const { id } = await authenticateAndRedirect();
+
+  if (!id) {
+    return null;
+  }
 
   try {
     createAndEditCategorySchema.parse(values);
 
     const category: CategoryType = await prisma.category.create({
       data: {
+        creatorId: id,
         ...values,
       },
     });
@@ -36,6 +51,11 @@ export async function updateCategoryAction(
   values: CreateAndEditCategoryType
 ): Promise<CategoryType | null> {
   // todo check user role
+  const { id: currUserId } = await authenticateAndRedirect();
+
+  if (!currUserId) {
+    return null;
+  }
 
   try {
     const category: CategoryType = await prisma.category.update({
@@ -44,6 +64,7 @@ export async function updateCategoryAction(
       },
       data: {
         ...values,
+        creatorId: currUserId,
       },
     });
     return category;
@@ -56,6 +77,8 @@ export async function deleteCategoryAction(
   id: string
 ): Promise<CategoryType | null> {
   //todo check user role
+
+  await authenticateAndRedirect();
 
   try {
     const category: CategoryType = await prisma.category.delete({

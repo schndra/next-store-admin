@@ -15,6 +15,7 @@ export type CategoryColumn = {
   desc: string;
   img?: string | null;
   slug: string;
+  creatorId: string;
   //   products?: any[]; // change later
   createdAt: Date | string;
   updatedAt: Date | string;
@@ -34,12 +35,16 @@ export const columns: ColumnDef<CategoryColumn>[] = [
     header: "Slug",
   },
   {
+    accessorKey: "creatorId",
+    header: "Created By",
+  },
+  {
     accessorKey: "createdAt",
-    header: "Created Date",
+    header: "Created At",
   },
   {
     accessorKey: "updatedAt",
-    header: "Updated Date",
+    header: "Updated At",
   },
   {
     id: "actions",
