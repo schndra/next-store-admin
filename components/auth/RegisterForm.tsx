@@ -7,13 +7,12 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomFormField } from "../FormComponents";
 import { RegisterFormSchemaType, registerFormSchema } from "@/types/types";
-import { useToast } from "../ui/use-toast";
 import { useTransition } from "react";
 import { registerAction } from "@/actions/register";
+import { toast } from "sonner";
 
 function RegisterForm() {
   const [isPending, startTransition] = useTransition();
-  const { toast } = useToast();
 
   const form = useForm<RegisterFormSchemaType>({
     resolver: zodResolver(registerFormSchema),
@@ -29,14 +28,11 @@ function RegisterForm() {
     startTransition(async () => {
       const data = await registerAction(values);
       if (data.error) {
-        toast({
-          description: data.error,
-          variant: "destructive",
-        });
+        toast.error(data.error);
         return;
       }
       form.reset();
-      toast({ title: "Success!", description: data.success });
+      toast.success(data.success);
     });
   };
 

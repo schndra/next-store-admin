@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { deleteCategoryAction } from "@/app/admin/_actions/category-action";
-import { useToast } from "@/components/ui/use-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 type DeleteCategoryBtnProps = {
   id: string;
@@ -27,7 +27,6 @@ function DeleteCategoryBtn({
   size,
   dropDownMenuItem = false,
 }: DeleteCategoryBtnProps) {
-  const { toast } = useToast();
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -35,18 +34,14 @@ function DeleteCategoryBtn({
     mutationFn: (id: string) => deleteCategoryAction(id),
     onSuccess: (data) => {
       if (!data) {
-        toast({
-          description: "Error deleting category. Let's try again.",
-        });
+        toast.error("Error deleting category. Let's try again.");
         return;
       }
 
       //inavildate queries
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["category", id] });
-      toast({
-        description: "Category Deleted! 🎉 Create another one!",
-      });
+      toast.success("Category Deleted! 🎉 Create another one!");
       if (!dropDownMenuItem) {
         router.push("/admin/categories/create");
       }

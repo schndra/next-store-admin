@@ -9,11 +9,10 @@ import { CustomFormField } from "../FormComponents";
 import { LoginFormSchemaType, loginFormSchema } from "@/types/types";
 import { startTransition, useTransition } from "react";
 import { loginAction } from "@/actions/login";
-import { useToast } from "../ui/use-toast";
+import { toast } from "sonner";
 
 function LoginForm() {
   const [isPending, startTransition] = useTransition();
-  const { toast } = useToast();
 
   const form = useForm<LoginFormSchemaType>({
     resolver: zodResolver(loginFormSchema),
@@ -29,14 +28,11 @@ function LoginForm() {
     startTransition(async () => {
       const data = await loginAction(values);
       if (data?.error) {
-        toast({
-          description: data.error,
-          variant: "destructive",
-        });
+        toast.error(data.error);
         return;
       }
       form.reset();
-      toast({ title: "Success!", description: "success fully logged in" });
+      toast.success("success fully logged in");
     });
   };
 

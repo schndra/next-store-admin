@@ -10,25 +10,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { CategoryColumn } from "@/app/admin/categories/_components/columns";
 import DeleteCategoryBtn from "@/app/admin/categories/_components/delete-category-btn";
+import { toast } from "sonner";
 
 type CellActionProps = {
   data: CategoryColumn;
 };
 
 export const CellAction = ({ data }: CellActionProps) => {
-  const { toast } = useToast();
   const router = useRouter();
 
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(data.id);
-    toast({
-      description: "Category Id copied to cipboard",
-      variant: "success",
-    });
+    toast.success("Category ID has been copied");
   };
   return (
     <DropdownMenu>

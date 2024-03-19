@@ -24,14 +24,13 @@ import {
   createAndEditCategorySchema,
 } from "@/types/types";
 import { CustomFormField } from "@/components/FormComponents";
-import { useToast } from "@/components/ui/use-toast";
 import ImageUpload from "@/components/ImageUpload";
 import DeleteCategoryBtn from "@/app/admin/categories/_components/delete-category-btn";
+import { toast } from "sonner";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { toast } = useToast();
 
   const { data } = useQuery({
     queryKey: ["category", categoryId],
@@ -48,14 +47,10 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
         : createCategoryAction(values),
     onSuccess: (data) => {
       if (!data) {
-        toast({
-          description: `Error ${toastErroMsg} category. Let's try again.`,
-        });
+        toast.error(`Error ${toastErroMsg} category. Let's try again.`);
         return;
       }
-      toast({
-        description: `Category ${toastSuccessMsg}! 🎉 Keep up the great work!`,
-      });
+      toast.success(`Category ${toastSuccessMsg}! 🎉 Keep up the great work!`);
       //inavildate queries
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["category", categoryId] });
