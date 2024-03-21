@@ -43,17 +43,20 @@ enum UserRole {
 }
 
 model User {
-  id            String     @id @default(cuid())
-  name          String?
-  email         String?    @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  role          UserRole   @default(USER)
-  accounts      Account[]
-  sessions      Session[]
-  Category      Category[]
-  Product       Product[]
+  id                String     @id @default(cuid())
+  name              String?
+  email             String?    @unique
+  emailVerified     DateTime?
+  image             String?
+  password          String?
+  role              UserRole   @default(USER)
+  accounts          Account[]
+  sessions          Session[]
+  categoriesCreated Category[] @relation("CreatedCategories")
+  categoriesUpdated Category[] @relation("UpdatedCategories")
+  sizesCreated      Size[]     @relation("CreatedSizes")
+  sizesUpdated      Size[]     @relation("UpdatedSizes")
+  Product           Product[]
 }
 
 model VerificationToken {
@@ -65,16 +68,30 @@ model VerificationToken {
 }
 
 model Category {
-  id        String    @id @default(cuid())
-  title     String
-  desc      String
-  img       String?
-  slug      String    @unique
-  products  Product[]
-  creatorId String //fk user id 
-  user      User      @relation(fields: [creatorId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  title         String
+  desc          String
+  img           String?
+  slug          String    @unique
+  products      Product[]
+  createdUser   User      @relation("CreatedCategories", fields: [createdUserId], references: [id])
+  createdUserId String //fk user id 
+  updatedUser   User?     @relation("UpdatedCategories", fields: [updatedUserId], references: [id])
+  updatedUserId String? //fk user id
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Size {
+  id            String   @id @default(cuid())
+  value         String
+  name          String
+  createdUser   User     @relation("CreatedSizes", fields: [createdUserId], references: [id])
+  createdUserId String //fk user id
+  updatedUser   User?    @relation("UpdatedSizes", fields: [updatedUserId], references: [id])
+  updatedUserId String? //fk user id
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Product {
@@ -85,10 +102,10 @@ model Product {
   slug       String   @unique
   price      Decimal //29.00
   isFeatured Boolean  @default(false)
-  creatorId  String //fk user id 
-  user       User     @relation(fields: [creatorId], references: [id])
-  categoryId String // fk category 
+  user       User     @relation(fields: [createdBy], references: [id])
+  createdBy  String //fk user id 
   category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String // fk category 
   images     Image[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -97,8 +114,8 @@ model Product {
 model Image {
   id        String   @id @default(cuid())
   url       String
-  product   Product  @relation(fields: [productId], references: [id])
   productId String //fk product 
+  product   Product  @relation(fields: [productId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
