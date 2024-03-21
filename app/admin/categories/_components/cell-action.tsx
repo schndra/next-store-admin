@@ -49,9 +49,9 @@ export const CellAction = ({ data }: CellActionProps) => {
     },
   });
 
-  const onCopy = (id: string) => {
+  const onCopy = (id: string, toastText: string) => {
     navigator.clipboard.writeText(data.id);
-    toast.success("Category ID has been copied");
+    toast.success(`${toastText} has been copied`);
   };
   return (
     <>
@@ -82,11 +82,24 @@ export const CellAction = ({ data }: CellActionProps) => {
             <Edit className="mr-2 h-4 w-4" />
             Update
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => onCopy(data.id)}>
+          <DropdownMenuItem onClick={() => onCopy(data.id, "Category ID")}>
             <Copy className="mr-2 h-4 w-4" />
             Copy ID
           </DropdownMenuItem>
-
+          <DropdownMenuItem
+            onClick={() => onCopy(data.createdUserId, "Created UserID")}
+          >
+            <Copy className="mr-2 h-4 w-4" />
+            Created By ID
+          </DropdownMenuItem>
+          {data.updatedUserId && (
+            <DropdownMenuItem
+              onClick={() => onCopy(data.updatedUserId!, "Updated UserID")}
+            >
+              <Copy className="mr-2 h-4 w-4" />
+              Updated By ID
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             onClick={() => {
               setIsAlertOpen(true);

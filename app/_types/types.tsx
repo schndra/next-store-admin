@@ -21,7 +21,9 @@ export type CategoryType = {
   desc: string;
   img?: string | null;
   slug: string;
-  creatorId: string;
+  // creatorId: string;
+  createdUserId: string;
+  updatedUserId?: string | null;
   products?: any[]; // change later
   createdAt: Date;
   updatedAt: Date;
