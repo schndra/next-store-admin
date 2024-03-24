@@ -14,12 +14,17 @@ const links: NavLink[] = [
   },
   {
     href: "/admin/product",
-    label: "Product",
+    label: "Products",
     icon: <LayoutDashboard />,
   },
   {
     href: "/admin/categories",
-    label: "Category",
+    label: "Categories",
+    icon: <LayoutDashboard />,
+  },
+  {
+    href: "/admin/sizes",
+    label: "Sizes",
     icon: <LayoutDashboard />,
   },
 ];

@@ -39,3 +39,21 @@ export const createAndEditCategorySchema = z.object({
 export type CreateAndEditCategoryType = z.infer<
   typeof createAndEditCategorySchema
 >;
+
+// SIZES TYPES
+export type SizeType = {
+  id: string;
+  value: string;
+  name: string;
+  createdUserId: string;
+  updatedUserId?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export const createAndEditSizeSchema = z.object({
+  value: z.string(),
+  name: z.string(),
+});
+
+export type CreateAndEditSizeType = z.infer<typeof createAndEditSizeSchema>;
