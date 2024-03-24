@@ -40,6 +40,7 @@ function DeleteCategoryBtn({ id, variant, size }: DeleteCategoryBtnProps) {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["category", id] });
       toast.success("Category Deleted! 🎉 Create another one!");
+      router.push("/admin/categories/create");
     },
   });
 

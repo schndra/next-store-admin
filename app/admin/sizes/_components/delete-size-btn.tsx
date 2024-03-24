@@ -23,6 +23,7 @@ type DeleteSizeBtnProps = {
 
 function DeleteSizeBtn({ id, variant, size }: DeleteSizeBtnProps) {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -38,6 +39,7 @@ function DeleteSizeBtn({ id, variant, size }: DeleteSizeBtnProps) {
       queryClient.invalidateQueries({ queryKey: ["sizes"] });
       queryClient.invalidateQueries({ queryKey: ["size", id] });
       toast.success("Size Deleted! 🎉 Create another one!");
+      router.push("/admin/sizes/create");
     },
   });
 
