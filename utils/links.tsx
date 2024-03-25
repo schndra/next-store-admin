@@ -13,11 +13,6 @@ const links: NavLink[] = [
     icon: <LayoutDashboard />,
   },
   {
-    href: "/admin/product",
-    label: "Products",
-    icon: <LayoutDashboard />,
-  },
-  {
     href: "/admin/categories",
     label: "Categories",
     icon: <LayoutDashboard />,
@@ -25,6 +20,11 @@ const links: NavLink[] = [
   {
     href: "/admin/sizes",
     label: "Sizes",
+    icon: <LayoutDashboard />,
+  },
+  {
+    href: "/admin/product",
+    label: "Products",
     icon: <LayoutDashboard />,
   },
 ];

@@ -38,7 +38,6 @@ export async function createCategoryAction(
       },
     });
 
-    console.log("im gere");
     return category;
   } catch (error) {
     console.log(error);

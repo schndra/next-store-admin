@@ -32,7 +32,6 @@ export const CellAction = ({ data }: CellActionProps) => {
     mutationFn: (id: string) => deleteSizeAction(id),
     onSuccess: (res) => {
       if (!res) {
-        console.log(res);
         toast.error("Error deleting size. Let's try again.");
         return;
       }

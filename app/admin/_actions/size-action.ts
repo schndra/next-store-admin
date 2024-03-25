@@ -38,7 +38,6 @@ export async function createSizeAction(
       },
     });
 
-    console.log("im here");
     return size;
   } catch (error) {
     console.log(error);
@@ -78,7 +77,6 @@ export async function deleteSizeAction(id: string): Promise<SizeType | null> {
 
   await authenticateAndRedirect();
 
-  console.log(id);
   try {
     const size: SizeType = await prisma.size.delete({
       where: {
@@ -110,7 +108,6 @@ export async function getAllSizeAction(): Promise<{
 
 export async function getSingleSize(id: string): Promise<SizeType | null> {
   let size: SizeType | null = null;
-  console.log(id);
 
   //todo check if user has the role admin
 
