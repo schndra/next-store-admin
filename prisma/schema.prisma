@@ -68,18 +68,28 @@ model VerificationToken {
 }
 
 model Category {
-  id            String    @id @default(cuid())
-  title         String
-  desc          String
-  img           String?
-  slug          String    @unique
+  id             String  @id @default(cuid())
+  title          String
+  desc           String
+  img            String?
+  slug           String  @unique
+  createdUserId  String
+  updatedUserId  String?
+  parentId       String?
+  isMainCategory Boolean @default(false)
+
+  //time stamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //----
+  // RELATIONS
+  //----
+  createdUser   User       @relation("CreatedCategories", fields: [createdUserId], references: [id])
+  updatedUser   User?      @relation("UpdatedCategories", fields: [updatedUserId], references: [id])
+  parent        Category?  @relation("Subcategories", fields: [parentId], references: [id])
+  subCategories Category[] @relation("Subcategories")
   products      Product[]
-  createdUser   User      @relation("CreatedCategories", fields: [createdUserId], references: [id])
-  createdUserId String //fk user id 
-  updatedUser   User?     @relation("UpdatedCategories", fields: [updatedUserId], references: [id])
-  updatedUserId String? //fk user id
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
 }
 
 model Size {
@@ -98,7 +108,6 @@ model Product {
   id         String   @id @default(cuid())
   title      String
   desc       String
-  img        String[]
   slug       String   @unique
   price      Decimal //29.00
   isFeatured Boolean  @default(false)
