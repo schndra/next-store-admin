@@ -70,6 +70,8 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
       desc: data?.desc || "",
       img: data?.img || "",
       slug: data?.slug || "",
+      parentId: data?.parentId || null,
+      isMainCategory: data?.isMainCategory || true,
     },
   });
 
