@@ -16,7 +16,7 @@ function CategoryView() {
 
   const { data } = useQuery({
     queryKey: ["categories"],
-    queryFn: () => getAllCategoryAction(),
+    queryFn: () => getAllCategoryAction({}),
   });
 
   const formattedCategories: CategoryColumn[] = data!.categories.map(

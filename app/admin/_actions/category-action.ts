@@ -7,7 +7,7 @@ import {
   createAndEditCategorySchema,
 } from "@/app/_types/types";
 import prisma from "@/utils/db";
-import { UserRole } from "@prisma/client";
+import { Prisma, UserRole } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 async function authenticateAndRedirect() {
@@ -91,12 +91,34 @@ export async function deleteCategoryAction(
   }
 }
 
+type GetAllCategoryActionTypes = {
+  type?: "main" | "sub"; //if not provided get all the categories
+};
+
 // todo implement search & paginantion
-export async function getAllCategoryAction(): Promise<{
+export async function getAllCategoryAction({
+  type,
+}: GetAllCategoryActionTypes): Promise<{
   categories: CategoryType[];
 } | null> {
   try {
+    console.log(type);
+    let whereClause: Prisma.CategoryWhereInput = {};
+
+    if (type === "main") {
+      whereClause = {
+        isMainCategory: true,
+      };
+    }
+
+    if (type === "sub") {
+      whereClause = {
+        parentId: { not: null },
+      };
+    }
+
     const categories: CategoryType[] = await prisma.category.findMany({
+      where: whereClause,
       orderBy: {
         createdAt: "asc",
       },
@@ -119,6 +141,9 @@ export async function getSingleCategory(
     category = await prisma.category.findUnique({
       where: {
         id,
+      },
+      include: {
+        // subCategories: true,
       },
     });
   } catch (error) {

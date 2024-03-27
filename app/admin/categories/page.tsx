@@ -12,7 +12,7 @@ async function CategoriesPage() {
   //prefetch all category data
   await queryClient.prefetchQuery({
     queryKey: ["categories"],
-    queryFn: () => getAllCategoryAction(),
+    queryFn: () => getAllCategoryAction({}),
   });
 
   return (

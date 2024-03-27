@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createCategoryAction,
+  getAllCategoryAction,
   getSingleCategory,
   updateCategoryAction,
 } from "@/app/admin/_actions/category-action";
@@ -27,6 +28,13 @@ import { CustomFormField } from "@/components/FormComponents";
 import ImageUpload from "@/components/ImageUpload";
 import { toast } from "sonner";
 import DeleteCategoryBtn from "@/app/admin/categories/_components/delete-category-btn";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 function CategoryForm({ categoryId }: { categoryId: string }) {
   const queryClient = useQueryClient();
@@ -35,6 +43,10 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
   const { data } = useQuery({
     queryKey: ["category", categoryId],
     queryFn: () => getSingleCategory(categoryId),
+  });
+  const { data: mainCategoryData } = useQuery({
+    queryKey: ["categories", "main"],
+    queryFn: () => getAllCategoryAction({ type: "main" }),
   });
 
   const toastErroMsg = data ? "editing" : "creating";
@@ -70,18 +82,35 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
       desc: data?.desc || "",
       img: data?.img || "",
       slug: data?.slug || "",
-      parentId: data?.parentId || null,
+      parentId: data?.parentId || "unassigned",
       isMainCategory: data?.isMainCategory || true,
     },
   });
 
   function onSubmit(values: CreateAndEditCategoryType) {
-    mutate({
-      ...values,
-      slug: values.title
+    const isMainCategory = values.parentId === "unassigned";
+    const mainCat = mainCategoryData?.categories.find(
+      (cat) => cat.id === values.parentId
+    );
+
+    let slug: string;
+    if (isMainCategory) {
+      slug = values.title
         .toLowerCase()
         .replace(/[^\w ]+/g, "")
-        .replace(/ +/g, "-"),
+        .replace(/ +/g, "-");
+    } else {
+      slug = `${mainCat?.title} ${values.title}`
+        .toLowerCase()
+        .replace(/[^\w ]+/g, "")
+        .replace(/ +/g, "-");
+    }
+
+    mutate({
+      ...values,
+      parentId: isMainCategory ? null : values.parentId,
+      isMainCategory,
+      slug,
     });
   }
 
@@ -134,6 +163,34 @@ function CategoryForm({ categoryId }: { categoryId: string }) {
               name="desc"
               placeholder="Category Description"
               labelText="Description"
+            />
+            <FormField
+              control={form.control}
+              name="parentId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="capitalize">Main Category</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value ? field.value : "unassigned"}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="unassigned">unassigned</SelectItem>
+                      {mainCategoryData?.categories.map((cat) => (
+                        <SelectItem key={cat.slug} value={cat.id}>
+                          {cat.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
           <Button className="ml-auto" type="submit" disabled={isPending}>
