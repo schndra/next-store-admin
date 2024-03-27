@@ -102,7 +102,6 @@ export async function getAllCategoryAction({
   categories: CategoryType[];
 } | null> {
   try {
-    console.log(type);
     let whereClause: Prisma.CategoryWhereInput = {};
 
     if (type === "main") {
