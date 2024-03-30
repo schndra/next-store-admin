@@ -24,8 +24,8 @@ export type CategoryType = {
   // creatorId: string;
   parentId?: string | null;
   isMainCategory: boolean;
-  createdUserId: string;
-  updatedUserId?: string | null;
+  // createdUserId: string;
+  // updatedUserId?: string | null;
   products?: any[]; // change later
   subCategories?: CategoryType[];
   createdAt: Date;
@@ -38,7 +38,7 @@ export const createAndEditCategorySchema = z.object({
   img: z.string(),
   slug: z.string(),
 
-  //
+  //main category
   parentId: z.string().nullish().optional(),
   isMainCategory: z.boolean().default(false),
 });

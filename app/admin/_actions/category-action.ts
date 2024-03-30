@@ -33,7 +33,7 @@ export async function createCategoryAction(
 
     const category: CategoryType = await prisma.category.create({
       data: {
-        createdUserId: id,
+        // createdUserId: id,
         ...values,
       },
     });
@@ -63,7 +63,7 @@ export async function updateCategoryAction(
       },
       data: {
         ...values,
-        updatedUserId: currUserId,
+        // updatedUserId: currUserId,
       },
     });
     return category;

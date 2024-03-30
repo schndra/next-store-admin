@@ -15,9 +15,10 @@ export type CategoryColumn = {
   desc: string;
   img?: string | null;
   slug: string;
+  isMainCategory: boolean;
   // creatorId: string;
-  createdUserId: string;
-  updatedUserId?: string | null;
+  // createdUserId: string;
+  // updatedUserId?: string | null;
   //   products?: any[]; // change later
   createdAt: Date | string;
   updatedAt: Date | string;
@@ -37,13 +38,17 @@ export const columns: ColumnDef<CategoryColumn>[] = [
     header: "Slug",
   },
   {
-    accessorKey: "createdUserId",
-    header: "Created By",
+    accessorKey: "isMainCategory",
+    header: "Main Category",
   },
-  {
-    accessorKey: "updatedUserId",
-    header: "Updated By",
-  },
+  // {
+  //   accessorKey: "createdUserId",
+  //   header: "Created By",
+  // },
+  // {
+  //   accessorKey: "updatedUserId",
+  //   header: "Updated By",
+  // },
   {
     accessorKey: "createdAt",
     header: "Created At",

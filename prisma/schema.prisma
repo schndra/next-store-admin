@@ -52,8 +52,8 @@ model User {
   role              UserRole   @default(USER)
   accounts          Account[]
   sessions          Session[]
-  categoriesCreated Category[] @relation("CreatedCategories")
-  categoriesUpdated Category[] @relation("UpdatedCategories")
+  // categoriesCreated Category[] @relation("CreatedCategories")
+  // categoriesUpdated Category[] @relation("UpdatedCategories")
   sizesCreated      Size[]     @relation("CreatedSizes")
   sizesUpdated      Size[]     @relation("UpdatedSizes")
   Product           Product[]
@@ -73,8 +73,8 @@ model Category {
   desc           String
   img            String?
   slug           String  @unique
-  createdUserId  String
-  updatedUserId  String?
+  // createdUserId  String
+  // updatedUserId  String?
   parentId       String?
   isMainCategory Boolean @default(false)
 
@@ -85,8 +85,9 @@ model Category {
   //----
   // RELATIONS
   //----
-  createdUser   User       @relation("CreatedCategories", fields: [createdUserId], references: [id])
-  updatedUser   User?      @relation("UpdatedCategories", fields: [updatedUserId], references: [id])
+  // move created user and updated user to audit log
+  // createdUser   User       @relation("CreatedCategories", fields: [createdUserId], references: [id])
+  // updatedUser   User?      @relation("UpdatedCategories", fields: [updatedUserId], references: [id])
   parent        Category?  @relation("Subcategories", fields: [parentId], references: [id])
   subCategories Category[] @relation("Subcategories")
   products      Product[]
