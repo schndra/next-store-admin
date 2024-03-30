@@ -43,20 +43,20 @@ enum UserRole {
 }
 
 model User {
-  id                String     @id @default(cuid())
-  name              String?
-  email             String?    @unique
-  emailVerified     DateTime?
-  image             String?
-  password          String?
-  role              UserRole   @default(USER)
-  accounts          Account[]
-  sessions          Session[]
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          UserRole  @default(USER)
+  accounts      Account[]
+  sessions      Session[]
   // categoriesCreated Category[] @relation("CreatedCategories")
   // categoriesUpdated Category[] @relation("UpdatedCategories")
-  sizesCreated      Size[]     @relation("CreatedSizes")
-  sizesUpdated      Size[]     @relation("UpdatedSizes")
-  Product           Product[]
+  // sizesCreated      Size[]     @relation("CreatedSizes")
+  // sizesUpdated      Size[]     @relation("UpdatedSizes")
+  Product       Product[]
 }
 
 model VerificationToken {
@@ -94,15 +94,16 @@ model Category {
 }
 
 model Size {
-  id            String   @id @default(cuid())
-  value         String
-  name          String
-  createdUser   User     @relation("CreatedSizes", fields: [createdUserId], references: [id])
-  createdUserId String //fk user id
-  updatedUser   User?    @relation("UpdatedSizes", fields: [updatedUserId], references: [id])
-  updatedUserId String? //fk user id
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        String   @id @default(cuid())
+  value     String
+  name      String
+  // move created user and updated user to audit log
+  // createdUser   User     @relation("CreatedSizes", fields: [createdUserId], references: [id])
+  // createdUserId String //fk user id
+  // updatedUser   User?    @relation("UpdatedSizes", fields: [updatedUserId], references: [id])
+  // updatedUserId String? //fk user id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Product {

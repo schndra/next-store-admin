@@ -9,8 +9,8 @@ export type SizeColumn = {
   id: string;
   value: string;
   name: string;
-  createdUserId: string;
-  updatedUserId?: string | null;
+  // createdUserId: string;
+  // updatedUserId?: string | null;
   createdAt: Date | string;
   updatedAt: Date | string;
 };
@@ -25,14 +25,14 @@ export const columns: ColumnDef<SizeColumn>[] = [
     header: "Value",
   },
 
-  {
-    accessorKey: "createdUserId",
-    header: "Created By",
-  },
-  {
-    accessorKey: "updatedUserId",
-    header: "Updated By",
-  },
+  // {
+  //   accessorKey: "createdUserId",
+  //   header: "Created By",
+  // },
+  // {
+  //   accessorKey: "updatedUserId",
+  //   header: "Updated By",
+  // },
   {
     accessorKey: "createdAt",
     header: "Created At",

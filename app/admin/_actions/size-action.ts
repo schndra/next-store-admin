@@ -33,7 +33,7 @@ export async function createSizeAction(
 
     const size: SizeType = await prisma.size.create({
       data: {
-        createdUserId: id,
+        // createdUserId: id,
         ...values,
       },
     });
@@ -63,7 +63,7 @@ export async function updateSizeAction(
       },
       data: {
         ...values,
-        updatedUserId: currUserId,
+        // updatedUserId: currUserId,
       },
     });
     return size;

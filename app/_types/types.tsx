@@ -52,8 +52,8 @@ export type SizeType = {
   id: string;
   value: string;
   name: string;
-  createdUserId: string;
-  updatedUserId?: string | null;
+  // createdUserId: string;
+  // updatedUserId?: string | null;
   createdAt: Date;
   updatedAt: Date;
 };

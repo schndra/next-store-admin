@@ -85,20 +85,20 @@ export const CellAction = ({ data }: CellActionProps) => {
             <Copy className="mr-2 h-4 w-4" />
             Copy ID
           </DropdownMenuItem>
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             onClick={() => onCopy(data.createdUserId, "Created UserID")}
           >
             <Copy className="mr-2 h-4 w-4" />
             Created By ID
-          </DropdownMenuItem>
-          {data.updatedUserId && (
+          </DropdownMenuItem> */}
+          {/* {data.updatedUserId && (
             <DropdownMenuItem
               onClick={() => onCopy(data.updatedUserId!, "Updated UserID")}
             >
               <Copy className="mr-2 h-4 w-4" />
               Updated By ID
             </DropdownMenuItem>
-          )}
+          )} */}
           <DropdownMenuItem
             onClick={() => {
               setIsAlertOpen(true);
