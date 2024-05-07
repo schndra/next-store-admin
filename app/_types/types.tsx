@@ -64,3 +64,21 @@ export const createAndEditSizeSchema = z.object({
 });
 
 export type CreateAndEditSizeType = z.infer<typeof createAndEditSizeSchema>;
+
+// COLOR TYPES
+export type ColorType = {
+  id: string;
+  value: string;
+  name: string;
+  // createdUserId: string;
+  // updatedUserId?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export const createAndEditColorSchema = z.object({
+  value: z.string(),
+  name: z.string(),
+});
+
+export type CreateAndEditColorType = z.infer<typeof createAndEditColorSchema>;

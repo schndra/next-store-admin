@@ -105,6 +105,18 @@ model Size {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+model Color {
+  id        String   @id @default(cuid())
+  value     String
+  name      String
+  // move created user and updated user to audit log
+  // createdUser   User     @relation("CreatedSizes", fields: [createdUserId], references: [id])
+  // createdUserId String //fk user id
+  // updatedUser   User?    @relation("UpdatedSizes", fields: [updatedUserId], references: [id])
+  // updatedUserId String? //fk user id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model Product {
   id         String   @id @default(cuid())
@@ -113,13 +125,17 @@ model Product {
   slug       String   @unique
   price      Decimal //29.00
   isFeatured Boolean  @default(false)
-  user       User     @relation(fields: [createdBy], references: [id])
   createdBy  String //fk user id 
-  category   Category @relation(fields: [categoryId], references: [id])
   categoryId String // fk category 
   images     Image[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  //----
+  // RELATIONS
+  //----
+  category Category @relation(fields: [categoryId], references: [id])
+  user     User     @relation(fields: [createdBy], references: [id])
 }
 
 model Image {

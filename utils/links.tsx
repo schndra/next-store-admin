@@ -1,4 +1,4 @@
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, Palette } from "lucide-react";
 
 export type NavLink = {
   href: string;
@@ -21,6 +21,11 @@ const links: NavLink[] = [
     href: "/admin/sizes",
     label: "Sizes",
     icon: <LayoutDashboard />,
+  },
+  {
+    href: "/admin/colors",
+    label: "Color",
+    icon: <Palette />,
   },
   {
     href: "/admin/product",
