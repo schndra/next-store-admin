@@ -6,7 +6,7 @@ import {
 import SizeForm from "@/app/admin/sizes/_components/create-size-form";
 import { getSingleSize } from "@/app/admin/_actions/size-action";
 
-async function CategoryPage({ params }: { params: { sizeId: string } }) {
+async function SizePage({ params }: { params: { sizeId: string } }) {
   const queryClient = new QueryClient();
 
   //prefetch single category data
@@ -23,4 +23,4 @@ async function CategoryPage({ params }: { params: { sizeId: string } }) {
     </>
   );
 }
-export default CategoryPage;
+export default SizePage;

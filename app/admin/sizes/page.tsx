@@ -6,7 +6,7 @@ import {
 import { getAllSizeAction } from "@/app/admin/_actions/size-action";
 import SizeView from "@/app/admin/sizes/_components/view-size";
 
-async function CategoriesPage() {
+async function SizesPage() {
   const queryClient = new QueryClient();
 
   //prefetch all category data
@@ -23,4 +23,4 @@ async function CategoriesPage() {
     </>
   );
 }
-export default CategoriesPage;
+export default SizesPage;
