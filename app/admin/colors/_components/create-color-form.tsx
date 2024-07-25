@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Heading from "@/app/admin/_components/heading";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { Form } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -19,6 +19,7 @@ import {
   updateColorAction,
 } from "@/app/admin/_actions/color-action";
 import DeleteColorBtn from "@/app/admin/colors/_components/delete-color-btn";
+import { Input } from "@/components/ui/input";
 
 function ColorForm({ colorId }: { colorId: string }) {
   const queryClient = useQueryClient();
@@ -86,11 +87,33 @@ function ColorForm({ colorId }: { colorId: string }) {
               placeholder="Color Name"
               labelText="Name"
             />
-            <CustomFormField
+            {/* <CustomFormField
               control={form.control}
               name="value"
               placeholder="Color Value"
               labelText="Value"
+            /> */}
+            <FormField
+              control={form.control}
+              name="value"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Color Value</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center gap-x-4">
+                      <Input
+                        placeholder="Color value"
+                        {...field}
+                      />
+                      <div
+                        className="border p-4 rounded-full"
+                        style={{ backgroundColor: field.value }}
+                      />
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
           </div>
           <Button className="ml-auto" type="submit" disabled={isPending}>
