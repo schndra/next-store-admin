@@ -28,7 +28,7 @@ const links: NavLink[] = [
     icon: <Palette />,
   },
   {
-    href: "/admin/product",
+    href: "/admin/products",
     label: "Products",
     icon: <LayoutDashboard />,
   },

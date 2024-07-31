@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ImagePlus, Trash } from "lucide-react";
 import Image from "next/image";
 import { CldUploadWidget } from "next-cloudinary";
+import React, { useEffect, useState } from "react";
 
 type ImageUploadProps = {
   disabled?: boolean;
@@ -12,24 +13,34 @@ type ImageUploadProps = {
   value: string[];
 };
 
-function ImageUpload({
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  disabled,
   onChange,
   onRemove,
   value,
-  disabled,
-}: ImageUploadProps) {
+}) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const onUpload = (result: any, widget: any) => {
-    console.log(result);
+    // console.log(widget);
+    // console.log(result);
     onChange(result.info.secure_url);
-    widget.close();
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div>
       <div className="mb-4 flex items-center gap-4">
-        {value.map((url, i) => (
+        {value.map((url) => (
           <div
-            key={i}
+            key={url}
             className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
           >
             <div className="z-10 absolute top-2 right-2">
@@ -37,12 +48,14 @@ function ImageUpload({
                 type="button"
                 onClick={() => onRemove(url)}
                 variant="destructive"
-                size="icon"
+                size="sm"
               >
                 <Trash className="h-4 w-4" />
               </Button>
             </div>
-            <Image fill className="object-cover" src={url} alt="image" />
+            <div className="relative aspect-video mt-2">
+              <Image fill className="object-cover" alt="Image" src={url} />
+            </div>
           </div>
         ))}
       </div>
@@ -51,11 +64,12 @@ function ImageUpload({
         onSuccess={(result, { widget }) => onUpload(result, widget)}
       >
         {({ open }) => {
-          const handleClick = () => {
+          const onClick = () => {
             open();
           };
+
           return (
-            <Button type="button" disabled={disabled} onClick={handleClick}>
+            <Button type="button" disabled={disabled} onClick={onClick}>
               <ImagePlus className="h-4 w-4 mr-2" />
               Upload an Image
             </Button>
@@ -64,5 +78,6 @@ function ImageUpload({
       </CldUploadWidget>
     </div>
   );
-}
+};
+
 export default ImageUpload;

@@ -121,6 +121,9 @@ export async function getAllCategoryAction({
       orderBy: {
         createdAt: "asc",
       },
+      include: {
+        subCategories: type === "main" ? true : false,
+      },
     });
 
     return { categories };

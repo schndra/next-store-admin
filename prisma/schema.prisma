@@ -94,7 +94,7 @@ model Category {
 }
 
 model Size {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   value     String
   name      String
   // move created user and updated user to audit log
@@ -102,11 +102,13 @@ model Size {
   // createdUserId String //fk user id
   // updatedUser   User?    @relation("UpdatedSizes", fields: [updatedUserId], references: [id])
   // updatedUserId String? //fk user id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
 }
+
 model Color {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   value     String
   name      String
   // move created user and updated user to audit log
@@ -114,8 +116,9 @@ model Color {
   // createdUserId String //fk user id
   // updatedUser   User?    @relation("UpdatedSizes", fields: [updatedUserId], references: [id])
   // updatedUserId String? //fk user id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
 }
 
 model Product {
@@ -127,6 +130,8 @@ model Product {
   isFeatured Boolean  @default(false)
   createdBy  String //fk user id 
   categoryId String // fk category 
+  colorId    String //fk color
+  sizeId     String //fk sizeID
   images     Image[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -135,6 +140,8 @@ model Product {
   // RELATIONS
   //----
   category Category @relation(fields: [categoryId], references: [id])
+  color    Color    @relation(fields: [colorId], references: [id])
+  size     Size     @relation(fields: [sizeId], references: [id])
   user     User     @relation(fields: [createdBy], references: [id])
 }
 
@@ -142,7 +149,7 @@ model Image {
   id        String   @id @default(cuid())
   url       String
   productId String //fk product 
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
