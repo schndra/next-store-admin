@@ -131,17 +131,18 @@ model Product {
   createdBy  String //fk user id 
   categoryId String // fk category 
   colorId    String //fk color
-  sizeId     String //fk sizeID
   images     Image[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  //sizes array
+  sizes Size[]
 
   //----
   // RELATIONS
   //----
   category Category @relation(fields: [categoryId], references: [id])
   color    Color    @relation(fields: [colorId], references: [id])
-  size     Size     @relation(fields: [sizeId], references: [id])
   user     User     @relation(fields: [createdBy], references: [id])
 }
 
