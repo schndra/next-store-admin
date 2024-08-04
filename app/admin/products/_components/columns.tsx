@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "@/app/admin/products/_components/cell-action";
 import { Decimal } from "@prisma/client/runtime/library";
+import { Badge } from "@/components/ui/badge";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -18,7 +19,7 @@ export type ProductColumn = {
   mainCategory?: string;
   category?: string;
   color?: string;
-  size?: string;
+  sizes?: string[];
 
   createdAt: Date | string;
   updatedAt: Date | string;
@@ -50,8 +51,21 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Sub Category",
   },
   {
-    accessorKey: "size",
-    header: "Size",
+    accessorKey: "sizes",
+    header: "Sizes",
+    cell: ({ row }) => (
+      <div className="flex gap-1">
+        {row.original.sizes?.map((i) => (
+          <Badge
+            variant="secondary"
+            key={i}
+            className="rounded-sm px-1 gap-1 font-normal"
+          >
+            {i}
+          </Badge>
+        ))}
+      </div>
+    ),
   },
   {
     accessorKey: "color",

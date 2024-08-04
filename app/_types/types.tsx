@@ -60,11 +60,11 @@ export type CreateAndEditCategoryType = z.infer<
 export type SizeType = {
   id: string;
   value: string;
-  name: string;
+  name?: string;
   // createdUserId: string;
   // updatedUserId?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export const createAndEditSizeSchema = z.object({
@@ -118,12 +118,12 @@ export type ProductType = {
   categoryId: string;
   images?: Image[];
   colorId: string;
-  sizeId: string;
   createdAt: Date;
   updatedAt: Date;
   category?: CategoryType;
-  size?: SizeType;
   color?: ColorType;
+  //size arr
+  sizes?: SizeType[];
 };
 
 export const createAndEditProductSchema = z.object({
@@ -136,7 +136,7 @@ export const createAndEditProductSchema = z.object({
   categoryId: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
   colorId: z.string().min(1),
-  sizeId: z.string().min(1),
+  sizes: z.object({ id: z.string(), value: z.string() }).array().min(1),
 });
 
 export type CreateAndEditProductType = z.infer<

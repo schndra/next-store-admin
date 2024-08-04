@@ -23,10 +23,10 @@ function ProductView() {
     ...item,
     mainCategory: item.category?.parent?.title,
     category: item.category?.title,
-    size: item.size?.name,
     color: item.color?.value,
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
     updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
+    sizes: item.sizes?.map((i) => i.value),
   }));
 
   return (

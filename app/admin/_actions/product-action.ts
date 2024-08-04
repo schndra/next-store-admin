@@ -44,7 +44,7 @@ export async function createProductAction(
       title,
       isFeatured,
       colorId,
-      sizeId,
+      sizes,
     } = values;
 
     const product: ProductType = await prisma.product.create({
@@ -58,11 +58,14 @@ export async function createProductAction(
         createdBy: id,
         categoryId,
         colorId,
-        sizeId,
+        // sizeId,
         images: {
           createMany: {
             data: [...images.map((image: { url: string }) => image)],
           },
+        },
+        sizes: {
+          connect: sizes,
         },
       },
       include: {
@@ -97,7 +100,7 @@ export async function updateProductAction(
     title,
     isFeatured,
     colorId,
-    sizeId,
+    sizes,
   } = values;
 
   try {
@@ -114,9 +117,12 @@ export async function updateProductAction(
         createdBy: currUserId,
         categoryId,
         colorId,
-        sizeId,
+
         images: {
           deleteMany: {},
+        },
+        sizes: {
+          set: sizes.map((item) => ({ id: item.id })),
         },
       },
     });
@@ -154,7 +160,7 @@ export async function deleteProductAction(
     });
     return product;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return null;
   }
 }
@@ -173,7 +179,7 @@ export async function getAllProductAction(): Promise<{
             parent: true,
           },
         },
-        size: true,
+        sizes: true,
         color: true,
       },
     });
@@ -198,7 +204,7 @@ export async function getSingleProduct(
       },
       include: {
         category: true,
-        size: true,
+        sizes: true,
         color: true,
         images: true,
       },

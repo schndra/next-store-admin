@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCategoryAction } from "@/app/admin/_actions/category-action";
 import { AlertDialogDemo } from "@/components/modals/AlertModal";
+import { deleteProductAction } from "../../_actions/product-action";
 
 type CellActionProps = {
   data: ProductColumn;
@@ -30,7 +31,7 @@ export const CellAction = ({ data }: CellActionProps) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (id: string) => deleteCategoryAction(id),
+    mutationFn: (id: string) => deleteProductAction(id),
     onSuccess: (res) => {
       if (!res) {
         toast.error("Error deleting product. Let's try again.");

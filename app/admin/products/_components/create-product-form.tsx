@@ -43,6 +43,8 @@ import { getAllCategoryAction } from "../../_actions/category-action";
 import { getAllSizeAction } from "../../_actions/size-action";
 import { getAllColorAction } from "../../_actions/color-action";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import MultiSelect from "./multi-select";
 
 function ProductForm({ productId }: { productId: string }) {
   const queryClient = useQueryClient();
@@ -107,9 +109,14 @@ function ProductForm({ productId }: { productId: string }) {
       price: data?.price ? parseFloat(String(data.price)) : 0,
       categoryId: data?.categoryId || "",
       colorId: data?.colorId || "",
-      sizeId: data?.sizeId || "",
       isFeatured: data?.isFeatured || false,
       createdBy: data?.createdBy || "",
+      sizes:
+        data?.sizes?.map((item) => ({
+          id: item.id,
+          value: item.value,
+          label: item.name,
+        })) || [],
     },
     shouldUnregister: false,
   });
@@ -241,32 +248,23 @@ function ProductForm({ productId }: { productId: string }) {
 
             <FormField
               control={form.control}
-              name="sizeId"
+              name="sizes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Size</FormLabel>
-                  <Select
-                    // disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a size"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {sizeData?.sizes.map((size) => (
-                        <SelectItem key={size.id} value={size.id}>
-                          ({size.value}) {size.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Sizes</FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      title="sizes"
+                      options={sizeData?.sizes.map((item) => ({
+                        id: item.id,
+                        value: item.value,
+                        label: item.name,
+                      }))}
+                      selectedItems={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormDescription>Choose the Sizes.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
