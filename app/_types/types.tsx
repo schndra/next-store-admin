@@ -117,13 +117,13 @@ export type ProductType = {
   createdBy: string;
   categoryId: string;
   images?: Image[];
-  colorId: string;
   createdAt: Date;
   updatedAt: Date;
   category?: CategoryType;
-  color?: ColorType;
   //size arr
   sizes?: SizeType[];
+  //product arr
+  colors?: ColorType[];
 };
 
 export const createAndEditProductSchema = z.object({
@@ -135,8 +135,9 @@ export const createAndEditProductSchema = z.object({
   createdBy: z.string(),
   categoryId: z.string().min(1),
   images: z.object({ url: z.string() }).array(),
-  colorId: z.string().min(1),
   sizes: z.object({ id: z.string(), value: z.string() }).array().min(1),
+  // colorId: z.string().min(1),
+  colors: z.object({ id: z.string(), value: z.string() }).array().min(1),
 });
 
 export type CreateAndEditProductType = z.infer<

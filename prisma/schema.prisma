@@ -130,19 +130,19 @@ model Product {
   isFeatured Boolean  @default(false)
   createdBy  String //fk user id 
   categoryId String // fk category 
-  colorId    String //fk color
   images     Image[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
   //sizes array
   sizes Size[]
+  //color array
+  colors Color[]
 
   //----
   // RELATIONS
   //----
   category Category @relation(fields: [categoryId], references: [id])
-  color    Color    @relation(fields: [colorId], references: [id])
   user     User     @relation(fields: [createdBy], references: [id])
 }
 

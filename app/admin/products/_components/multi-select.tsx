@@ -83,15 +83,29 @@ function MultiSelect({
                           .map((item) => item.value)
                           .includes(option.value)
                     )
-                    .map((option) => (
-                      <Badge
-                        variant="secondary"
-                        key={option.value}
-                        className="rounded-sm px-1 font-normal"
-                      >
-                        {option.value}
-                      </Badge>
-                    ))
+                    .map((option) => {
+                      if (title !== "colors") {
+                        return (
+                          <Badge
+                            variant="secondary"
+                            key={option.value}
+                            className="rounded-sm px-1 font-normal"
+                          >
+                            {option.value}
+                          </Badge>
+                        );
+                      }
+                      return (
+                        <Badge
+                          variant="secondary"
+                          key={option.value}
+                          className="rounded-full p-2 font-normal"
+                          style={{ backgroundColor: option.value }}
+                        >
+                          {/* {option.value} */}
+                        </Badge>
+                      );
+                    })
                 )}
               </div>
             </>
@@ -138,9 +152,16 @@ function MultiSelect({
                       </div>
 
                       <span>{option.label}</span>
-                      <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {option.value}
-                      </span>
+                      {title !== "colors" ? (
+                        <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
+                          {option.value}
+                        </span>
+                      ) : (
+                        <div
+                          className="ml-auto flex h-4 w-4 items-center justify-center border p-2 rounded-full"
+                          style={{ backgroundColor: option.value }}
+                        />
+                      )}
                     </CommandItem>
                   );
                 })}

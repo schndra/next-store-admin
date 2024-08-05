@@ -18,7 +18,7 @@ export type ProductColumn = {
   isFeatured?: boolean;
   mainCategory?: string;
   category?: string;
-  color?: string;
+  colors?: string[];
   sizes?: string[];
 
   createdAt: Date | string;
@@ -68,15 +68,18 @@ export const columns: ColumnDef<ProductColumn>[] = [
     ),
   },
   {
-    accessorKey: "color",
-    header: "Color",
+    accessorKey: "colors",
+    header: "Colors",
     cell: ({ row }) => (
-      <div className="flex items-center gap-x-2">
-        {row.original.color}
-        <div
-          className="h-6 w-6 rounded-full border"
-          style={{ backgroundColor: row.original.color }}
-        />
+      <div className="flex gap-1">
+        {row.original.colors?.map((item, i) => (
+          <Badge
+            variant="secondary"
+            key={i}
+            className="rounded-full p-2 font-normal"
+            style={{ backgroundColor: item }}
+          />
+        ))}
       </div>
     ),
   },

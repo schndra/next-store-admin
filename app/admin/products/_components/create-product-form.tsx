@@ -108,11 +108,16 @@ function ProductForm({ productId }: { productId: string }) {
         : [] || [],
       price: data?.price ? parseFloat(String(data.price)) : 0,
       categoryId: data?.categoryId || "",
-      colorId: data?.colorId || "",
       isFeatured: data?.isFeatured || false,
       createdBy: data?.createdBy || "",
       sizes:
         data?.sizes?.map((item) => ({
+          id: item.id,
+          value: item.value,
+          label: item.name,
+        })) || [],
+      colors:
+        data?.colors?.map((item) => ({
           id: item.id,
           value: item.value,
           label: item.name,
@@ -123,7 +128,7 @@ function ProductForm({ productId }: { productId: string }) {
 
   function onSubmit(values: CreateAndEditProductType) {
     // console.log("is this working");
-    console.log(values);
+    // console.log(values);
     mutate(values);
   }
 
@@ -269,8 +274,31 @@ function ProductForm({ productId }: { productId: string }) {
                 </FormItem>
               )}
             />
-
             <FormField
+              control={form.control}
+              name="colors"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Colors</FormLabel>
+                  <FormControl>
+                    <MultiSelect
+                      title="colors"
+                      options={colorData?.colors.map((item) => ({
+                        id: item.id,
+                        value: item.value,
+                        label: item.name,
+                      }))}
+                      selectedItems={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormDescription>Choose the Colors.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* <FormField
               control={form.control}
               name="colorId"
               render={({ field }) => (
@@ -300,7 +328,7 @@ function ProductForm({ productId }: { productId: string }) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <FormField
               control={form.control}

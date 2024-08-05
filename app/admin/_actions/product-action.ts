@@ -43,7 +43,8 @@ export async function createProductAction(
       slug,
       title,
       isFeatured,
-      colorId,
+      colors,
+      // colorId,
       sizes,
     } = values;
 
@@ -57,7 +58,7 @@ export async function createProductAction(
         desc,
         createdBy: id,
         categoryId,
-        colorId,
+        // colorId,
         // sizeId,
         images: {
           createMany: {
@@ -66,6 +67,9 @@ export async function createProductAction(
         },
         sizes: {
           connect: sizes,
+        },
+        colors: {
+          connect: colors,
         },
       },
       include: {
@@ -99,7 +103,7 @@ export async function updateProductAction(
     slug,
     title,
     isFeatured,
-    colorId,
+    colors,
     sizes,
   } = values;
 
@@ -116,13 +120,16 @@ export async function updateProductAction(
         desc,
         createdBy: currUserId,
         categoryId,
-        colorId,
+        // colorId,
 
         images: {
           deleteMany: {},
         },
         sizes: {
           set: sizes.map((item) => ({ id: item.id })),
+        },
+        colors: {
+          set: colors.map((item) => ({ id: item.id })),
         },
       },
     });
@@ -180,7 +187,7 @@ export async function getAllProductAction(): Promise<{
           },
         },
         sizes: true,
-        color: true,
+        colors: true,
       },
     });
 
@@ -205,7 +212,7 @@ export async function getSingleProduct(
       include: {
         category: true,
         sizes: true,
-        color: true,
+        colors: true,
         images: true,
       },
     });
