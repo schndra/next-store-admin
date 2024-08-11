@@ -14,7 +14,7 @@ export type ProductColumn = {
   desc: string;
   slug: string;
 
-  price: Decimal;
+  price: string;
   isFeatured?: boolean;
   mainCategory?: string;
   category?: string;

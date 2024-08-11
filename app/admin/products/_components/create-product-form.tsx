@@ -45,6 +45,7 @@ import { getAllColorAction } from "../../_actions/color-action";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import MultiSelect from "./multi-select";
+import { generateSlug } from "@/utils/helpers";
 
 function ProductForm({ productId }: { productId: string }) {
   const queryClient = useQueryClient();
@@ -127,7 +128,7 @@ function ProductForm({ productId }: { productId: string }) {
   });
 
   function onSubmit(values: CreateAndEditProductType) {
-    // console.log("is this working");
+    values.slug = generateSlug(values.slug);
     // console.log(values);
     mutate(values);
   }
@@ -329,6 +330,13 @@ function ProductForm({ productId }: { productId: string }) {
                 </FormItem>
               )}
             /> */}
+
+            <CustomFormField
+              control={form.control}
+              name="slug"
+              placeholder="Product Slug"
+              labelText="Slug"
+            />
 
             <FormField
               control={form.control}

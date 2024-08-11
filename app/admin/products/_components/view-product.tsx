@@ -28,6 +28,7 @@ function ProductView() {
     updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
     sizes: item.sizes?.map((i) => i.value),
     colors: item.colors?.map((i) => i.value),
+    price: item.price.toString(),
   }));
 
   return (
