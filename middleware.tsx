@@ -15,8 +15,11 @@ export default auth((req) => {
   const user = req.auth?.user;
   const isLoggedIn = !!req.auth;
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
-  const isPublicRoutes = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoutes = publicRoutes.includes("/" + nextUrl.pathname.split('/')[1]);
+  // const isPublicRoutes = publicRoutes.find(route => nextUrl.pathname.startsWith(route));
   const isAuthRoutes = authRoutes.includes(nextUrl.pathname);
+  // console.log("PATH_NAME: ", nextUrl.pathname);
+  // console.log("PATH_NAME: ", nextUrl.pathname.split("/"));
   // const isAdminRoutes = adminRoutes.includes(nextUrl.pathname);
   const isAdminRoutes = nextUrl.pathname.startsWith(adminAuthPrefix);
 
