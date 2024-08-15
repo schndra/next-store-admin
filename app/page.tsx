@@ -6,12 +6,13 @@ import LandingImg from "@/assets/web_shopping.svg";
 import Logo from "@/assets/logo.png";
 import Navbar from "@/components/store/Navbar";
 import Footer from "@/components/store/Footer";
+import Slider from "@/components/store/Slider";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <h1>hello from store</h1>
+      <Slider />
       <Footer />
     </>
     // <main className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-foreground to-slate-950">
