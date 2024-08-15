@@ -60,7 +60,7 @@ export type CreateAndEditCategoryType = z.infer<
 export type SizeType = {
   id: string;
   value: string;
-  name?: string;
+  name: string;
   // createdUserId: string;
   // updatedUserId?: string | null;
   createdAt?: Date;

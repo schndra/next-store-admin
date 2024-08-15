@@ -22,8 +22,8 @@ function SizeView() {
 
   const formattedSizes: SizeColumn[] = data!.sizes.map((item) => ({
     ...item,
-    createdAt: format(item.createdAt, "MMMM do, yyyy"),
-    updatedAt: format(item.updatedAt, "MMMM do, yyyy"),
+    createdAt: format(item.createdAt!, "MMMM do, yyyy"),
+    updatedAt: format(item.updatedAt!, "MMMM do, yyyy"),
   }));
 
   return (
