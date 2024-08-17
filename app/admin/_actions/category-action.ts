@@ -123,6 +123,7 @@ export async function getAllCategoryAction({
       },
       include: {
         subCategories: type === "main" ? true : false,
+        parent: true,
       },
     });
 

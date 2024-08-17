@@ -38,6 +38,11 @@ const CategoryList = () => {
             </div>
             <h1 className="mt-8 font-light text-xl tracking-wide">
               {item.title}
+              {item.parent && (
+                <span className="text-gray-400 text-base pl-2">
+                  ({item.parent?.title})
+                </span>
+              )}
             </h1>
           </Link>
         ))}
