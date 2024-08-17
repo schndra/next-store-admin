@@ -32,7 +32,11 @@ function SingleProductView({ productId }: { productId: string }) {
         </div>
 
         <div className="h-[2px] bg-gray-100" />
-        <CustomizeProducts colors={data?.colors} sizes={data?.sizes} />
+        <CustomizeProducts
+          colors={data?.colors}
+          sizes={data?.sizes}
+          productId={data?.id}
+        />
 
         <Add />
 

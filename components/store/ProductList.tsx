@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import Pagination from "./Pagination";
 
 const PRODUCT_PER_PAGE = 8;
 
@@ -109,6 +110,12 @@ const ProductList = ({
           </button>
         </Link>
       ))}
+
+      <Pagination
+        currentPage={pageNumber}
+        hasPrev={pageNumber > 1}
+        hasNext={pageNumber < totalPages}
+      />
     </div>
   );
 };
