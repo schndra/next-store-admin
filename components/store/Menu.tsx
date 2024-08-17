@@ -1,11 +1,14 @@
 "use client";
 
+import useCart from "@/hooks/use-cart-store";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 const Menu = () => {
   const [open, setOpen] = useState(false);
+
+  const { items } = useCart();
 
   return (
     <div className="">
@@ -25,7 +28,7 @@ const Menu = () => {
           <Link href="/">About</Link>
           <Link href="/">Contact</Link>
           <Link href="/">Logout</Link>
-          <Link href="/">Cart(1)</Link>
+          <Link href="/">Cart({items.length || 0})</Link>
         </div>
       )}
     </div>
