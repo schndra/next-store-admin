@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Pagination from "./Pagination";
+import { title } from "process";
 
 const PRODUCT_PER_PAGE = 8;
 
@@ -16,6 +17,7 @@ const ProductList = ({
 }: {
   params?: {
     isFeatured?: boolean;
+    isPagination?: boolean;
   };
   limit?: number;
 }) => {
@@ -110,12 +112,13 @@ const ProductList = ({
           </button>
         </Link>
       ))}
-
-      <Pagination
-        currentPage={pageNumber}
-        hasPrev={pageNumber > 1}
-        hasNext={pageNumber < totalPages}
-      />
+      {params?.isPagination !== false && params?.isPagination === undefined ? (
+        <Pagination
+          currentPage={pageNumber}
+          hasPrev={pageNumber > 1}
+          hasNext={pageNumber < totalPages}
+        />
+      ) : null}
     </div>
   );
 };

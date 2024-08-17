@@ -43,6 +43,7 @@ export default async function Home() {
             <ProductList
               params={{
                 isFeatured: true,
+                isPagination: false,
               }}
               limit={4}
             />
@@ -58,6 +59,7 @@ export default async function Home() {
             <ProductList
               params={{
                 isFeatured: false,
+                isPagination: false,
               }}
               // categoryId={process.env.FEATURED_PRODUCTS_NEW_CATEGORY_ID!}
               limit={4}
