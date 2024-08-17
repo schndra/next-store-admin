@@ -9,40 +9,56 @@ import Footer from "@/components/store/Footer";
 import Slider from "@/components/store/Slider";
 import ProductList from "@/components/store/ProductList";
 import CategoryList from "@/components/store/CategoryList";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { getProductSearchAction } from "./admin/_actions/product-action";
 
-export default function Home() {
+export default async function Home() {
+  const queryClient = new QueryClient();
+
+  //prefetch all category data
+  await queryClient.prefetchQuery({
+    queryKey: ["products", "", "", "", "", "", "", 1],
+    queryFn: () => getProductSearchAction({}),
+  });
+
   return (
     <>
-      <Navbar />
-      <div className="">
-        <Slider />
-        <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-          <h1 className="text-2xl">Featured Products</h1>
-          <ProductList
-            params={{
-              isFeatured: true,
-            }}
-            limit={4}
-          />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Navbar />
+        <div className="">
+          <Slider />
+          <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+            <h1 className="text-2xl">Featured Products</h1>
+            <ProductList
+              params={{
+                isFeatured: true,
+              }}
+              limit={4}
+            />
+          </div>
+          <div className="mt-24">
+            <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
+              Categories
+            </h1>
+            <CategoryList />
+          </div>
+          <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+            <h1 className="text-2xl">New Products</h1>
+            <ProductList
+              params={{
+                isFeatured: false,
+              }}
+              // categoryId={process.env.FEATURED_PRODUCTS_NEW_CATEGORY_ID!}
+              limit={4}
+            />
+          </div>
         </div>
-        <div className="mt-24">
-          <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
-            Categories
-          </h1>
-          <CategoryList />
-        </div>
-        <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-          <h1 className="text-2xl">New Products</h1>
-          <ProductList
-            params={{
-              isFeatured: false,
-            }}
-            // categoryId={process.env.FEATURED_PRODUCTS_NEW_CATEGORY_ID!}
-            limit={4}
-          />
-        </div>
-      </div>
-      <Footer />
+        <Footer />
+      </HydrationBoundary>
     </>
     // <main className="bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary-foreground to-slate-950">
     //   <header className="max-w-6xl mx-auto px-4 sm:px-8 py-6 flex gap-x-4 items-center">

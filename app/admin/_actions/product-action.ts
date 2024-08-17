@@ -233,7 +233,7 @@ type GetProductSearchActionTypes = {
   max?: string;
   cat?: string;
   isFeatured?: boolean;
-  sort: string;
+  sort?: string;
 };
 
 export async function getProductSearchAction({
@@ -243,7 +243,7 @@ export async function getProductSearchAction({
   min,
   max,
   cat,
-  sort = "desc",
+  sort,
   isFeatured,
 }: GetProductSearchActionTypes): Promise<{
   products: ProductType[];
