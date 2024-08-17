@@ -273,7 +273,16 @@ export async function getProductSearchAction({
       whereClause = {
         ...whereClause,
         category: {
-          slug: cat,
+          OR: [
+            {
+              slug: cat,
+            },
+            {
+              parent: {
+                slug: cat,
+              },
+            },
+          ],
         },
       };
     }

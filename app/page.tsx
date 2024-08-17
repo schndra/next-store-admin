@@ -15,6 +15,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { getProductSearchAction } from "./admin/_actions/product-action";
+import { getAllCategoryAction } from "./admin/_actions/category-action";
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -23,6 +24,12 @@ export default async function Home() {
   await queryClient.prefetchQuery({
     queryKey: ["products", "", "", "", "", "", "", 1],
     queryFn: () => getProductSearchAction({}),
+  });
+
+  //prefetch all category data
+  await queryClient.prefetchQuery({
+    queryKey: ["categories"],
+    queryFn: () => getAllCategoryAction({}),
   });
 
   return (

@@ -128,7 +128,9 @@ export async function getAllCategoryAction({
 
     return { categories };
   } catch (error) {
-    return null;
+    return {
+      categories: [],
+    };
   }
 }
 
