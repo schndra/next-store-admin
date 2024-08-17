@@ -5,6 +5,7 @@ import CustomizeProducts from "@/components/store/CustomizedProducts";
 import ProductImages from "@/components/store/ProductImages";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function SingleProductView({ productId }: { productId: string }) {
   const queryClient = useQueryClient();
@@ -13,6 +14,14 @@ function SingleProductView({ productId }: { productId: string }) {
     queryKey: ["product", productId],
     queryFn: () => getSingleProduct(productId),
   });
+
+  // const [selectedOption, setSelectedOption] = useState<{
+  //   [key: string]: string;
+  // }>({});
+
+  // const handleSelectedOption = (optionType: string, choice: string) => {
+  //   setSelectedOption((prev) => ({ ...prev, [optionType]: choice }));
+  // };
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
@@ -35,7 +44,7 @@ function SingleProductView({ productId }: { productId: string }) {
         <CustomizeProducts
           colors={data?.colors}
           sizes={data?.sizes}
-          productId={data?.id}
+          productId={data?.id!}
         />
 
         {data && <Add product={data} />}

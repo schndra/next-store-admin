@@ -1,10 +1,13 @@
-import { ProductType } from "@/app/_types/types";
+import { ColorType, ProductType, SizeType } from "@/app/_types/types";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 type CartItem = {
   product: ProductType;
   quantity: number;
+  selectedOptions?: {
+    [key: string]: string;
+  };
 };
 
 type CartStore = {
@@ -12,6 +15,12 @@ type CartStore = {
   addItem: (product: ProductType, quantity: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
+  updateSelectedOptions: (
+    productId: string,
+    selectedOptions: {
+      [key: string]: string;
+    }
+  ) => void;
 };
 
 // const useStore = create((set) => ({}));
@@ -83,6 +92,25 @@ const useCart = create(
           updatedItems[itemIndex] = {
             ...updatedItems[itemIndex],
             quantity,
+          };
+          set({ items: updatedItems });
+        }
+      },
+
+      updateSelectedOptions: (productId, selectedOptions) => {
+        const currItems = get().items;
+        const itemIndex = currItems.findIndex(
+          (item) => item.product.id === productId
+        );
+
+        if (itemIndex !== -1) {
+          const updatedItems = [...currItems];
+          updatedItems[itemIndex] = {
+            ...updatedItems[itemIndex],
+            selectedOptions: {
+              ...updatedItems[itemIndex].selectedOptions,
+              ...selectedOptions,
+            },
           };
           set({ items: updatedItems });
         }
