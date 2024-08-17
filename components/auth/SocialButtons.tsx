@@ -25,7 +25,7 @@ function SocialButtons() {
         <FcGoogle className="h-5 w-5" />
         <span>Sign in with Google</span>
       </Button>
-      <Button
+      {/* <Button
         size="lg"
         className="flex w-full gap-x-4"
         variant="outline"
@@ -35,7 +35,7 @@ function SocialButtons() {
       >
         <FaGithub className="h-5 w-5" />
         <span>Sign in with Github</span>
-      </Button>
+      </Button> */}
     </div>
   );
 }

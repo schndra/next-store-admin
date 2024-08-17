@@ -37,7 +37,11 @@ const CartModal = () => {
             {items.map((cartItem) => (
               <div className="flex gap-4" key={cartItem.product.id}>
                 <Image
-                  src="https://images.pexels.com/photos/27163415/pexels-photo-27163415/free-photo-of-residential-building-in-city.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  src={
+                    (cartItem.product.images &&
+                      cartItem.product.images[0].url) ||
+                    "/product.png"
+                  }
                   alt=""
                   width={72}
                   height={96}

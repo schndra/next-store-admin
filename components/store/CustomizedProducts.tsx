@@ -35,7 +35,7 @@ const CustomizeProducts = ({
               style={{
                 backgroundColor: item.value,
               }}
-              onClick={() => handleSelectedOption("colorId", item.id)}
+              onClick={() => handleSelectedOption("color", item.id)}
             >
               {selectedOption.color === item.id && (
                 <div className="absolute w-10 h-10 rounded-full ring-2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
@@ -50,7 +50,7 @@ const CustomizeProducts = ({
               <li
                 key={item.id}
                 className="ring-1 ring-lama text-lama rounded-md py-1 px-4 text-sm cursor-pointer"
-                onClick={() => handleSelectedOption("sizeId", item.id)}
+                onClick={() => handleSelectedOption("size", item.id)}
               >
                 {item.name}
               </li>
