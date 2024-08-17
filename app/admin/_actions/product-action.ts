@@ -224,3 +224,111 @@ export async function getSingleProduct(
   // }
   return product;
 }
+
+type GetProductSearchActionTypes = {
+  search?: string;
+  page?: number;
+  limit?: number;
+  min?: string;
+  max?: string;
+  cat?: string;
+  isFeatured?: boolean;
+  sort: string;
+};
+
+export async function getProductSearchAction({
+  search,
+  page = 1,
+  limit = 10,
+  min,
+  max,
+  cat,
+  sort = "desc",
+  isFeatured,
+}: GetProductSearchActionTypes): Promise<{
+  products: ProductType[];
+  count: number;
+  page: number;
+  totalPages: number;
+} | null> {
+  // console.log(sort);
+  try {
+    let whereClause: Prisma.ProductWhereInput = {};
+
+    if (search) {
+      whereClause = {
+        ...whereClause,
+        OR: [
+          {
+            title: {
+              contains: search,
+            },
+          },
+        ],
+      };
+    }
+
+    // Add category filter
+    if (cat) {
+      whereClause = {
+        ...whereClause,
+        category: {
+          slug: cat,
+        },
+      };
+    }
+
+    if (typeof isFeatured === "boolean") {
+      whereClause = {
+        ...whereClause,
+        isFeatured: isFeatured,
+      };
+    }
+
+    // Add price range filter
+    if (min || max) {
+      whereClause = {
+        ...whereClause,
+        price: {
+          gte: min ? parseFloat(min) : undefined,
+          lte: max ? parseFloat(max) : undefined,
+        },
+      };
+    }
+
+    const orderBy: Prisma.ProductOrderByWithRelationInput = sort
+      ? { [sort.split(" ")[1]]: sort.split(" ")[0] } // Sort based on the 'sort' parameter
+      : { createdAt: "desc" };
+
+    console.log(orderBy, "hey");
+
+    const skip = (page - 1) * limit;
+
+    const products: ProductType[] = await prisma.product.findMany({
+      where: whereClause,
+      skip,
+      take: limit,
+      orderBy,
+      include: {
+        category: {
+          include: {
+            parent: true,
+          },
+        },
+        images: true,
+        sizes: true,
+        colors: true,
+      },
+    });
+
+    const count: number = await prisma.product.count({
+      where: whereClause,
+    });
+
+    const totalPages = Math.ceil(count / limit);
+
+    return { products, count, page, totalPages };
+  } catch (error) {
+    return { products: [], count: 0, page: 1, totalPages: 0 };
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Button } from "../ui/button";
 
 const Filter = () => {
   const pathname = usePathname();
@@ -19,7 +20,7 @@ const Filter = () => {
   return (
     <div className="mt-12 flex justify-between">
       <div className="flex gap-6 flex-wrap">
-        <select
+        {/* <select
           name="type"
           id=""
           className="py-2 px-4 rounded-2xl text-xs font-medium bg-[#EBEDED]"
@@ -28,7 +29,16 @@ const Filter = () => {
           <option>Type</option>
           <option value="physical">Physical</option>
           <option value="digital">Digital</option>
-        </select>
+        </select> */}
+
+        {/* <Button
+          variant="destructive"
+          className="rounded-full"
+          onClick={() => replace(pathname)}
+        >
+          Reset Filters
+        </Button> */}
+
         <input
           type="text"
           name="min"
@@ -71,8 +81,8 @@ const Filter = () => {
           <option>Sort By</option>
           <option value="asc price">Price (low to high)</option>
           <option value="desc price">Price (high to low)</option>
-          <option value="asc lastUpdated">Newest</option>
-          <option value="desc lastUpdated">Oldest</option>
+          <option value="asc createdAt">Newest</option>
+          <option value="desc createdAt">Oldest</option>
         </select>
       </div>
     </div>

@@ -1,9 +1,19 @@
+import { getAllProductAction } from "@/app/admin/_actions/product-action";
 import Filter from "@/components/store/Filter";
 import ProductList from "@/components/store/ProductList";
+import { QueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { Suspense } from "react";
 
 const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["products", "", "all", 1],
+    queryFn: () => getAllProductAction(),
+  });
+
+  // console.log(searchParams);
+
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative">
       {/* CAMPAIGN */}
@@ -22,12 +32,12 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
         </div>
       </div>
       {/* FILTER */}
-      <Filter  />
+      <Filter />
       {/* PRODUCTS */}
-      <h1 className="mt-12 text-xl font-semibold">cat name For You!</h1>
+      <h1 className="mt-12 text-xl font-semibold">Clothes For You!</h1>
       <ProductList
-        categoryId={"00000000-000000-000000-000000000001"}
-        searchParams={searchParams}
+
+      // categoryId={"00000000-000000-000000-000000000001"}
       />
     </div>
   );
