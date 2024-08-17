@@ -2,11 +2,13 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Button } from "../ui/button";
+import { useRef } from "react";
 
 const Filter = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
@@ -17,8 +19,16 @@ const Filter = () => {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (formRef.current) {
+      formRef.current.reset(); // Reset form inputs
+    }
+    replace(pathname); // Clear search parameters from the URL
+  };
+
   return (
-    <div className="mt-12 flex justify-between">
+    <form ref={formRef} className="mt-12 flex justify-between">
       <div className="flex gap-6 flex-wrap">
         {/* <select
           name="type"
@@ -30,15 +40,13 @@ const Filter = () => {
           <option value="physical">Physical</option>
           <option value="digital">Digital</option>
         </select> */}
-
-        {/* <Button
+        <Button
           variant="destructive"
           className="rounded-full"
-          onClick={() => replace(pathname)}
+          onClick={handleReset}
         >
           Reset Filters
-        </Button> */}
-
+        </Button>
         <input
           type="text"
           name="min"
@@ -85,7 +93,7 @@ const Filter = () => {
           <option value="desc createdAt">Oldest</option>
         </select>
       </div>
-    </div>
+    </form>
   );
 };
 

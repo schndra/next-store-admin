@@ -21,7 +21,6 @@ export default function Home() {
           <ProductList
             params={{
               isFeatured: true,
-              orderBy: 'desc createdAt'
             }}
             limit={4}
           />
@@ -37,7 +36,6 @@ export default function Home() {
           <ProductList
             params={{
               isFeatured: false,
-              orderBy: "asc createdAt",
             }}
             // categoryId={process.env.FEATURED_PRODUCTS_NEW_CATEGORY_ID!}
             limit={4}

@@ -15,7 +15,6 @@ const ProductList = ({
 }: {
   params?: {
     isFeatured?: boolean;
-    orderBy: string;
   };
   limit?: number;
 }) => {
@@ -25,7 +24,7 @@ const ProductList = ({
   const min = searchParams.get("min") || "";
   const max = searchParams.get("max") || "";
   const cat = searchParams.get("cat") || "";
-  const sort = searchParams.get("sort") || "" || params?.orderBy!;
+  const sort = searchParams.get("sort") || "";
   const isFeatured = params?.isFeatured;
 
   // const type = searchParams.get("type") || "physical";
