@@ -22,7 +22,7 @@ function SingleProductView({ productId }: { productId: string }) {
       </div>
       {/* TEXTS */}
       <div className="w-full lg:w-1/2 flex flex-col gap-6">
-        <h1 className="text-4xl font-medium">prod name</h1>
+        <h1 className="text-4xl font-medium">{data?.title}</h1>
         <p className="text-gray-500">{data?.desc}</p>
         <div className="h-[2px] bg-gray-100" />
 

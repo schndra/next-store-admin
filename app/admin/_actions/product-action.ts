@@ -262,6 +262,7 @@ export async function getProductSearchAction({
           {
             title: {
               contains: search,
+              mode: "insensitive",
             },
           },
         ],
@@ -309,7 +310,7 @@ export async function getProductSearchAction({
       ? { [sort.split(" ")[1]]: sort.split(" ")[0] } // Sort based on the 'sort' parameter
       : { createdAt: "desc" };
 
-    console.log(orderBy, "hey");
+    // console.log(orderBy, "hey");
 
     const skip = (page - 1) * limit;
 
