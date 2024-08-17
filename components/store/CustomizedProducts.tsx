@@ -22,7 +22,7 @@ const CustomizeProducts = ({
     setSelectedOption((prev) => ({ ...prev, [optionType]: choice }));
   };
 
-  console.log(selectedOption);
+  // console.log(selectedOption);
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">

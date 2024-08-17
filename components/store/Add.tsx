@@ -1,10 +1,14 @@
 "use client";
 
+import { ProductType } from "@/app/_types/types";
+import useCart from "@/hooks/use-cart-store";
 import { useState } from "react";
+import { toast } from "sonner";
 
-const Add = () => {
+const Add = ({ product }: { product: ProductType }) => {
   const [quantity, setQuantity] = useState(1);
 
+  const { addItem, updateQuantity } = useCart();
   // // TEMPORARY
   // const stock = 4;
 
@@ -15,6 +19,12 @@ const Add = () => {
     if (type === "i" && quantity) {
       setQuantity((prev) => prev + 1);
     }
+  };
+
+  const handleAddToCart = () => {
+    addItem(product, quantity);
+    updateQuantity(product.id, quantity);
+    toast.success(`Item Added to Cart! 🎉 Add another one!`);
   };
 
   return (
@@ -49,7 +59,7 @@ const Add = () => {
           )} */}
         </div>
         <button
-          onClick={() => console.log("add to car")}
+          onClick={handleAddToCart}
           className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
         >
           Add to Cart

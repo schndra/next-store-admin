@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime/library";
 import prisma from "./db";
 
 export const getUserByEmail = async (email: string) => {

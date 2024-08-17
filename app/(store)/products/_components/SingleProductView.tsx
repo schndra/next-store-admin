@@ -38,7 +38,7 @@ function SingleProductView({ productId }: { productId: string }) {
           productId={data?.id}
         />
 
-        <Add />
+        {data && <Add product={data} />}
 
         <div className="h-[2px] bg-gray-100" />
 

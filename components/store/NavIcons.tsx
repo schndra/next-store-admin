@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import UserBtn from "../auth/UserBtn";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import CartModal from "./CartModal";
+import useCart from "@/hooks/use-cart-store";
 // import CartModal from "./CartModal";
 // import { useWixClient } from "@/hooks/useWixClient";
 // import Cookies from "js-cookie";
@@ -19,7 +20,7 @@ const NavIcons = () => {
   const pathName = usePathname();
 
   const user = useCurrentUser();
-
+  const { items } = useCart();
   const isLoggedIn = user !== undefined;
 
   const handleProfile = () => {
@@ -58,7 +59,7 @@ const NavIcons = () => {
       >
         <Image src="/cart.png" alt="" width={22} height={22} />
         <div className="absolute -top-4 -right-4 w-6 h-6 bg-lama rounded-full text-white text-sm flex items-center justify-center">
-          2
+          {items.length}
         </div>
       </div>
       {isCartOpen && <CartModal />}
